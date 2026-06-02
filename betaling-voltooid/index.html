@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Betaling voltooid — Pauzeapp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
+  :root { --aubergine: #4C0D30; --oranje: #DD6822; --zand: #FBEFDD; --tekst-donker: #3D2010; --tekst-zacht: #72682B; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito Sans', sans-serif; background: var(--zand); color: var(--tekst-donker); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 36px; color: var(--aubergine); margin-bottom: 16px; }
+  .card { background: white; border-radius: 24px; padding: 48px; max-width: 520px; text-align: center; box-shadow: 0 8px 32px rgba(76,13,48,0.08); }
+  .icon-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--oranje); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; color: white; font-size: 40px; font-weight: 700; }
+  p { color: var(--tekst-zacht); margin-bottom: 24px; }
+  .btn-primary { background: var(--oranje); color: white; padding: 16px 34px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 16px; display: inline-block; margin: 8px; }
+  .btn-secondary { background: transparent; color: var(--aubergine); padding: 14px 32px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; border: 2px solid var(--aubergine); display: inline-block; margin: 8px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-circle">✓</div>
+    <h1>Betaling voltooid!</h1>
+    <p>Bedankt voor je aankoop. Je abonnement is nu actief. Open de Pauzeapp op je telefoon — je nieuwe functies staan direct klaar.</p>
+    <div>
+      <a href="/account" class="btn-primary">Naar mijn account</a>
+      <a href="/" class="btn-secondary">Naar homepage</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inloggen — Pauzeapp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
+
+  :root {
+    --aubergine: #4C0D30;
+    --oranje: #DD6822;
+    --zand: #FBEFDD;
+    --tekst-donker: #3D2010;
+    --tekst-zacht: #72682B;
+    --rood: #C0392B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito Sans', sans-serif; background: var(--zand); color: var(--tekst-donker); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 500; line-height: 1.15; }
+
+  header { padding: 24px 0; background: rgba(251,239,221,0.92); backdrop-filter: blur(8px); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--aubergine); text-decoration: none; }
+  .logo span { color: var(--oranje); }
+
+  .card-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+  .card { background: white; border-radius: 24px; padding: 48px; max-width: 440px; width: 100%; box-shadow: 0 8px 32px rgba(76,13,48,0.08); }
+  .card h1 { font-size: 32px; color: var(--aubergine); margin-bottom: 8px; }
+  .card .sub { color: var(--tekst-zacht); margin-bottom: 32px; font-size: 16px; }
+
+  .form-group { margin-bottom: 20px; position: relative; }
+  label { display: block; font-weight: 600; font-size: 13px; color: var(--aubergine); margin-bottom: 6px; letter-spacing: 0.5px; }
+  input { width: 100%; padding: 14px 18px; border: 2px solid #EADBC4; border-radius: 14px; font-family: inherit; font-size: 15px; background: #FFFBF3; color: var(--tekst-donker); transition: border 0.2s; }
+  input:focus { outline: none; border-color: var(--oranje); }
+  .toggle-pw { position: absolute; right: 14px; top: 38px; background: none; border: none; cursor: pointer; color: var(--tekst-zacht); padding: 4px; font-size: 13px; }
+
+  .btn-primary { background: var(--oranje); color: white; padding: 16px 34px; border-radius: 999px; border: none; font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer; width: 100%; transition: transform 0.15s, opacity 0.2s; margin-top: 8px; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .alt { text-align: center; margin-top: 24px; font-size: 14px; color: var(--tekst-zacht); }
+  .alt a { color: var(--oranje); font-weight: 600; text-decoration: none; }
+
+  .forgot { text-align: right; margin-top: -12px; margin-bottom: 16px; }
+  .forgot a { color: var(--tekst-zacht); font-size: 13px; text-decoration: none; }
+  .forgot a:hover { color: var(--oranje); }
+
+  .error { background: rgba(192,57,43,0.1); color: var(--rood); padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-bottom: 16px; display: none; }
+  .error.actief { display: block; }
+  .success { background: rgba(82,183,136,0.15); color: #2D7044; padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-bottom: 16px; display: none; }
+  .success.actief { display: block; }
+
+  footer { padding: 24px; text-align: center; font-size: 13px; color: var(--tekst-zacht); }
+  footer a { color: var(--tekst-zacht); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a href="/" class="logo">Pauze<span>app</span></a>
+      <a href="/registreer" style="color: var(--aubergine); font-weight: 600; text-decoration: none;">Account aanmaken →</a>
+    </div>
+  </div>
+</header>
+
+<div class="card-wrap">
+  <div class="card">
+    <h1>Welkom terug</h1>
+    <p class="sub">Log in om je abonnement te beheren.</p>
+
+    <div id="error" class="error"></div>
+    <div id="success" class="success"></div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">E-MAILADRES</label>
+        <input type="email" id="email" placeholder="jouw@email.nl" required>
+      </div>
+      <div class="form-group">
+        <label for="wachtwoord">WACHTWOORD</label>
+        <input type="password" id="wachtwoord" placeholder="••••••••" required>
+        <button type="button" class="toggle-pw" id="toggle-pw">Tonen</button>
+      </div>
+      <div class="forgot"><a href="#" id="vergeten">Wachtwoord vergeten?</a></div>
+      <button type="submit" class="btn-primary" id="submit-btn">Inloggen →</button>
+    </form>
+
+    <p class="alt">Nog geen account? <a href="/registreer">Maak er een aan</a></p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Pauzeapp · <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a></p>
+</footer>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://zxlqnofdhyzwnuggtbsa.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // ← Maurice: vervang met echte key
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById('login-form');
+  const errorEl = document.getElementById('error');
+  const successEl = document.getElementById('success');
+  const submitBtn = document.getElementById('submit-btn');
+  const togglePw = document.getElementById('toggle-pw');
+  const pwInput = document.getElementById('wachtwoord');
+  const emailInput = document.getElementById('email');
+  const vergetenLink = document.getElementById('vergeten');
+
+  function toonError(tekst) { errorEl.textContent = tekst; errorEl.classList.add('actief'); successEl.classList.remove('actief'); }
+  function toonSuccess(tekst) { successEl.textContent = tekst; successEl.classList.add('actief'); errorEl.classList.remove('actief'); }
+  function verberg() { errorEl.classList.remove('actief'); successEl.classList.remove('actief'); }
+
+  togglePw.addEventListener('click', () => {
+    if (pwInput.type === 'password') { pwInput.type = 'text'; togglePw.textContent = 'Verbergen'; }
+    else { pwInput.type = 'password'; togglePw.textContent = 'Tonen'; }
+  });
+
+  // Check als al ingelogd
+  (async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) { window.location.href = '/account'; }
+  })();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    verberg();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Bezig...';
+
+    const email = emailInput.value.trim();
+    const wachtwoord = pwInput.value;
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password: wachtwoord });
+      if (error) throw error;
+      if (data.session) { window.location.href = '/account'; }
+    } catch (err) {
+      console.error('Login fout:', err);
+      if (err.message && err.message.includes('Invalid login')) {
+        toonError('E-mailadres of wachtwoord klopt niet. Probeer opnieuw.');
+      } else {
+        toonError(err.message || 'Er ging iets mis. Probeer het opnieuw.');
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Inloggen →';
+    }
+  });
+
+  vergetenLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    verberg();
+    const email = emailInput.value.trim();
+    if (!email) {
+      toonError('Vul eerst je e-mailadres in. Dan sturen we een herstel-link.');
+      emailInput.focus();
+      return;
+    }
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/wachtwoord-herstellen',
+      });
+      if (error) throw error;
+      toonSuccess('We hebben een herstel-link gestuurd naar ' + email + '. Kijk ook in je spam-map.');
+    } catch (err) {
+      toonError(err.message || 'Probeer het zo nog eens.');
+    }
+  });
+</script>
+
+</body>
+</html>

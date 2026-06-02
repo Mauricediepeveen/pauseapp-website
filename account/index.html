@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mijn account — Pauzeapp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
+
+  :root {
+    --aubergine: #4C0D30;
+    --oranje: #DD6822;
+    --zand: #FBEFDD;
+    --tekst-donker: #3D2010;
+    --tekst-zacht: #72682B;
+    --rood: #C0392B;
+    --groen: #3D5A2A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito Sans', sans-serif; background: var(--zand); color: var(--tekst-donker); line-height: 1.6; min-height: 100vh; }
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; line-height: 1.15; }
+
+  header { padding: 24px 0; background: rgba(251,239,221,0.92); backdrop-filter: blur(8px); }
+  .wrap { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--aubergine); text-decoration: none; }
+  .logo span { color: var(--oranje); }
+  .uitlog { background: transparent; border: none; color: var(--tekst-zacht); font-family: inherit; font-weight: 600; cursor: pointer; font-size: 14px; }
+
+  .main { padding: 40px 0; }
+  h1 { font-size: 36px; color: var(--aubergine); margin-bottom: 8px; }
+  .welkom { color: var(--tekst-zacht); margin-bottom: 32px; }
+
+  .card { background: white; border-radius: 24px; padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(76,13,48,0.06); }
+  .card h2 { font-size: 22px; color: var(--aubergine); margin-bottom: 16px; }
+
+  .pakket-status { display: flex; align-items: center; justify-content: space-between; padding: 20px; background: var(--aubergine); color: white; border-radius: 16px; }
+  .pakket-status .label { font-size: 11px; letter-spacing: 2px; color: var(--oranje); font-weight: 700; }
+  .pakket-status .naam { font-family: 'Fraunces', serif; font-size: 22px; margin-top: 4px; }
+  .pakket-status .info { font-size: 13px; opacity: 0.7; margin-top: 4px; }
+
+  .trial-banner { background: rgba(221,104,34,0.12); border-left: 3px solid var(--oranje); padding: 14px 18px; border-radius: 12px; font-size: 14px; margin-top: 16px; line-height: 1.5; }
+
+  .prijs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  @media (max-width: 600px) { .prijs-grid { grid-template-columns: 1fr; } }
+  .prijs-card { padding: 24px; border: 2px solid #EADBC4; border-radius: 16px; background: #FFFBF3; cursor: pointer; transition: border 0.2s, transform 0.15s; }
+  .prijs-card:hover { border-color: var(--oranje); transform: translateY(-2px); }
+  .prijs-card.actief { border-color: var(--oranje); background: rgba(221,104,34,0.05); }
+  .prijs-card h3 { font-size: 18px; color: var(--aubergine); margin-bottom: 4px; }
+  .prijs-card .prijs { font-family: 'Fraunces', serif; font-size: 28px; color: var(--aubergine); margin: 8px 0; }
+  .prijs-card .prijs span { font-size: 14px; color: var(--tekst-zacht); }
+  .prijs-card .desc { font-size: 13px; color: var(--tekst-zacht); }
+
+  .btn-primary { background: var(--oranje); color: white; padding: 16px 34px; border-radius: 999px; border: none; font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; transition: transform 0.15s, opacity 0.2s; margin-top: 16px; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-secondary { background: transparent; color: var(--aubergine); padding: 14px 28px; border-radius: 999px; border: 2px solid var(--aubergine); font-family: inherit; font-weight: 600; font-size: 14px; cursor: pointer; }
+  .btn-danger { background: transparent; color: var(--rood); padding: 12px 22px; border-radius: 999px; border: 1px solid var(--rood); font-family: inherit; font-weight: 600; font-size: 13px; cursor: pointer; }
+
+  .info-rij { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #EADBC4; font-size: 14px; }
+  .info-rij:last-child { border-bottom: none; }
+  .info-rij .label { color: var(--tekst-zacht); }
+  .info-rij .waarde { font-weight: 600; color: var(--aubergine); }
+
+  #loading { text-align: center; padding: 60px 24px; color: var(--tekst-zacht); }
+
+  footer { padding: 24px; text-align: center; font-size: 13px; color: var(--tekst-zacht); }
+  footer a { color: var(--tekst-zacht); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a href="/" class="logo">Pauze<span>app</span></a>
+      <button class="uitlog" id="uitlog-btn">Uitloggen</button>
+    </div>
+  </div>
+</header>
+
+<div id="loading">Gegevens laden...</div>
+
+<div id="content" style="display: none;">
+  <div class="main">
+    <div class="wrap">
+
+      <h1>Mijn account</h1>
+      <p class="welkom" id="welkom-tekst">Hoi!</p>
+
+      <!-- HUIDIG PAKKET -->
+      <div class="card">
+        <h2>Jouw pakket</h2>
+        <div class="pakket-status">
+          <div>
+            <div class="label">HUIDIG PAKKET</div>
+            <div class="naam" id="huidig-pakket">Start</div>
+            <div class="info" id="pakket-info"></div>
+          </div>
+        </div>
+        <div class="trial-banner" id="trial-banner" style="display: none;">
+          <strong>Gratis trial actief.</strong> Je proefperiode loopt nog tot <span id="trial-eind"></span>. Na deze datum stopt de Verbonden-toegang automatisch tenzij je een betaald pakket kiest.
+        </div>
+      </div>
+
+      <!-- PAKKETKEUZE -->
+      <div class="card" id="upgrade-card">
+        <h2>Wijzig je pakket</h2>
+        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 8px;">Kies welk pakket bij jou past. Maandelijks opzegbaar.</p>
+        <div class="prijs-grid">
+          <div class="prijs-card" data-pakket="verbonden">
+            <h3>Verbonden (stel)</h3>
+            <div class="prijs">€8,99<span> / maand</span></div>
+            <p class="desc">Voor 2 ouders samen. Alle premium features.</p>
+          </div>
+          <div class="prijs-card" data-pakket="solo">
+            <h3>Solo Verbonden</h3>
+            <div class="prijs">€4,50<span> / maand</span></div>
+            <p class="desc">Voor 1 ouder. Alle premium features behalve de gedeelde functies.</p>
+          </div>
+        </div>
+        <button class="btn-primary" id="koop-btn" disabled>Selecteer eerst een pakket</button>
+      </div>
+
+      <!-- MEDIATOR ADD-ON -->
+      <div class="card">
+        <h2>Mediator en PDF-download</h2>
+        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 16px;">Eenmalig <strong>€18,99</strong> voor 6 maanden toegang tot PDF-export en mediator-flow.</p>
+        <button class="btn-secondary" id="addon-btn">Aanschaffen</button>
+        <p id="addon-actief" style="color: var(--groen); font-size: 13px; margin-top: 12px; display: none;">✓ Actief tot <span id="addon-eind"></span></p>
+      </div>
+
+      <!-- ACCOUNT INFO -->
+      <div class="card">
+        <h2>Accountgegevens</h2>
+        <div class="info-rij"><span class="label">E-mailadres</span><span class="waarde" id="info-email">—</span></div>
+        <div class="info-rij"><span class="label">Naam</span><span class="waarde" id="info-naam">—</span></div>
+        <div class="info-rij"><span class="label">Koppelcode</span><span class="waarde" id="info-koppelcode">—</span></div>
+      </div>
+
+      <!-- OPZEGGEN -->
+      <div class="card" id="opzeg-card" style="display: none;">
+        <h2>Abonnement opzeggen</h2>
+        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 16px;">Bij opzegging stopt de eerstvolgende incasso. Je houdt toegang tot het einde van je huidige betaalde maand.</p>
+        <button class="btn-danger" id="opzeg-btn">Abonnement opzeggen</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Pauzeapp · <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a></p>
+</footer>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://zxlqnofdhyzwnuggtbsa.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // ← vervang
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let userId = null;
+  let gekozenPakket = null;
+
+  // Auth check
+  (async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { window.location.href = '/login'; return; }
+    userId = session.user.id;
+
+    // Laad gebruiker
+    const { data: gebruiker, error } = await supabase
+      .from('gebruikers')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    if (error || !gebruiker) {
+      console.error('Gebruiker niet gevonden:', error);
+      document.getElementById('loading').textContent = 'Account niet gevonden. Probeer opnieuw in te loggen.';
+      return;
+    }
+
+    // Vul UI
+    document.getElementById('welkom-tekst').textContent = `Hoi ${gebruiker.naam || ''}!`;
+    document.getElementById('info-email').textContent = session.user.email;
+    document.getElementById('info-naam').textContent = gebruiker.naam || '—';
+    document.getElementById('info-koppelcode').textContent = gebruiker.koppelcode || '—';
+
+    const pakketNaam = { 'start': 'Start (gratis)', 'verbonden': 'Verbonden — €8,99/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Start';
+    document.getElementById('huidig-pakket').textContent = pakketNaam;
+
+    // Trial
+    if (gebruiker.trial_actief && gebruiker.trial_eind) {
+      const trialEind = new Date(gebruiker.trial_eind);
+      const dagenOver = Math.ceil((trialEind - new Date()) / (1000 * 60 * 60 * 24));
+      if (dagenOver > 0) {
+        document.getElementById('trial-eind').textContent = trialEind.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+        document.getElementById('trial-banner').style.display = 'block';
+        document.getElementById('pakket-info').textContent = `Trial: nog ${dagenOver} dag${dagenOver !== 1 ? 'en' : ''}`;
+      }
+    } else if (gebruiker.subscription_eind) {
+      const eind = new Date(gebruiker.subscription_eind);
+      document.getElementById('pakket-info').textContent = `Volgende incasso: ${eind.toLocaleDateString('nl-NL')}`;
+    }
+
+    // Add-on
+    if (gebruiker.mediator_addon_eind) {
+      const addonEind = new Date(gebruiker.mediator_addon_eind);
+      if (addonEind > new Date()) {
+        document.getElementById('addon-actief').style.display = 'block';
+        document.getElementById('addon-eind').textContent = addonEind.toLocaleDateString('nl-NL');
+        document.getElementById('addon-btn').textContent = 'Actief (geen actie nodig)';
+        document.getElementById('addon-btn').disabled = true;
+      }
+    }
+
+    // Opzeggen alleen tonen bij betaald pakket
+    if (['verbonden', 'solo', 'pro', 'premium'].includes(gebruiker.pakket)) {
+      document.getElementById('opzeg-card').style.display = 'block';
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  })();
+
+  // Pakket selecteren
+  document.querySelectorAll('.prijs-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.prijs-card').forEach(c => c.classList.remove('actief'));
+      card.classList.add('actief');
+      gekozenPakket = card.dataset.pakket;
+      const koopBtn = document.getElementById('koop-btn');
+      const prijsTekst = gekozenPakket === 'verbonden' ? '€8,99/mnd' : '€4,50/mnd';
+      koopBtn.textContent = `Aankopen voor ${prijsTekst} →`;
+      koopBtn.disabled = false;
+    });
+  });
+
+  // Koop-knop: roept Mollie Edge Function aan
+  document.getElementById('koop-btn').addEventListener('click', async () => {
+    if (!gekozenPakket) return;
+    const btn = document.getElementById('koop-btn');
+    btn.disabled = true;
+    btn.textContent = 'Doorsturen naar Mollie...';
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/create-payment`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          pakket: gekozenPakket,
+          bedrag: gekozenPakket === 'verbonden' ? '8.99' : '4.50',
+          redirectUrl: window.location.origin + '/betaling-voltooid',
+        }),
+      });
+      const data = await res.json();
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error(data.error || 'Geen checkout-URL ontvangen');
+      }
+    } catch (err) {
+      alert('Er ging iets mis bij het starten van de betaling: ' + err.message);
+      btn.disabled = false;
+      btn.textContent = `Aankopen →`;
+    }
+  });
+
+  // Add-on knop
+  document.getElementById('addon-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('addon-btn');
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'Doorsturen...';
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/create-payment`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          pakket: 'mediator_addon',
+          bedrag: '18.99',
+          redirectUrl: window.location.origin + '/betaling-voltooid',
+        }),
+      });
+      const data = await res.json();
+      if (data.checkoutUrl) { window.location.href = data.checkoutUrl; }
+      else { throw new Error(data.error || 'Geen checkout-URL'); }
+    } catch (err) {
+      alert('Er ging iets mis: ' + err.message);
+      btn.disabled = false;
+      btn.textContent = 'Aanschaffen';
+    }
+  });
+
+  // Opzeggen
+  document.getElementById('opzeg-btn').addEventListener('click', async () => {
+    if (!confirm('Weet je zeker dat je het abonnement wilt opzeggen? Je houdt toegang tot het einde van de huidige periode.')) return;
+    try {
+      const { error } = await supabase
+        .from('gebruikers')
+        .update({ pakket: 'start' /* of mark voor opzeg-flow */ })
+        .eq('id', userId);
+      if (error) throw error;
+      alert('Abonnement opgezegd. Je houdt toegang tot het einde van de huidige periode.');
+      location.reload();
+    } catch (err) {
+      alert('Er ging iets mis: ' + err.message);
+    }
+  });
+
+  // Uitloggen
+  document.getElementById('uitlog-btn').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    window.location.href = '/login';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account aanmaken — Pauzeapp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
+
+  :root {
+    --aubergine: #4C0D30;
+    --aubergine-licht: #5f1a3e;
+    --oranje: #DD6822;
+    --zand: #FBEFDD;
+    --tekst-donker: #3D2010;
+    --tekst-zacht: #72682B;
+    --rood: #C0392B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--zand);
+    color: var(--tekst-donker);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; line-height: 1.15; }
+
+  header {
+    padding: 24px 0;
+    background: rgba(251,239,221,0.92);
+    backdrop-filter: blur(8px);
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--aubergine); text-decoration: none; }
+  .logo span { color: var(--oranje); }
+
+  /* CARD */
+  .card-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 48px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(76,13,48,0.08);
+  }
+  .card h1 { font-size: 32px; color: var(--aubergine); margin-bottom: 8px; }
+  .card .sub { color: var(--tekst-zacht); margin-bottom: 32px; font-size: 16px; }
+
+  .form-group { margin-bottom: 20px; }
+  label { display: block; font-weight: 600; font-size: 13px; color: var(--aubergine); margin-bottom: 6px; letter-spacing: 0.5px; }
+  input {
+    width: 100%; padding: 14px 18px;
+    border: 2px solid #EADBC4;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 15px;
+    background: #FFFBF3;
+    color: var(--tekst-donker);
+    transition: border 0.2s;
+  }
+  input:focus { outline: none; border-color: var(--oranje); }
+
+  .btn-primary {
+    background: var(--oranje); color: white;
+    padding: 16px 34px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.15s, opacity 0.2s;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .alt { text-align: center; margin-top: 24px; font-size: 14px; color: var(--tekst-zacht); }
+  .alt a { color: var(--oranje); font-weight: 600; text-decoration: none; }
+
+  .error { background: rgba(192,57,43,0.1); color: var(--rood); padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-bottom: 16px; display: none; }
+  .error.actief { display: block; }
+
+  .info-banner { background: rgba(221,104,34,0.1); border-left: 3px solid var(--oranje); padding: 14px 18px; border-radius: 12px; font-size: 14px; color: var(--tekst-donker); margin-bottom: 24px; line-height: 1.5; }
+
+  footer { padding: 24px; text-align: center; font-size: 13px; color: var(--tekst-zacht); }
+  footer a { color: var(--tekst-zacht); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a href="/" class="logo">Pauze<span>app</span></a>
+      <a href="/login" style="color: var(--aubergine); font-weight: 600; text-decoration: none;">Inloggen →</a>
+    </div>
+  </div>
+</header>
+
+<div class="card-wrap">
+  <div class="card">
+    <h1>Maak je account</h1>
+    <p class="sub">Begin met 30 dagen gratis Verbonden. Geen creditcard nodig.</p>
+
+    <div class="info-banner">
+      <strong>Eerst hier, dan in de app.</strong> Maak je account aan op deze website. Daarna download je Pauzeapp uit de Store en log je in.
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <form id="registreer-form">
+      <div class="form-group">
+        <label for="naam">JOUW NAAM</label>
+        <input type="text" id="naam" placeholder="Bv. Maurice" required>
+      </div>
+      <div class="form-group">
+        <label for="email">E-MAILADRES</label>
+        <input type="email" id="email" placeholder="jouw@email.nl" required>
+      </div>
+      <div class="form-group">
+        <label for="wachtwoord">WACHTWOORD</label>
+        <input type="password" id="wachtwoord" placeholder="Minstens 8 tekens" required minlength="8">
+      </div>
+      <button type="submit" class="btn-primary" id="submit-btn">Start gratis trial →</button>
+    </form>
+
+    <p class="alt">Al een account? <a href="/login">Log hier in</a></p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Pauzeapp · <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a></p>
+</footer>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://zxlqnofdhyzwnuggtbsa.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // ← Maurice: vervang met je echte anon key
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById('registreer-form');
+  const errorEl = document.getElementById('error');
+  const submitBtn = document.getElementById('submit-btn');
+
+  function toonError(tekst) {
+    errorEl.textContent = tekst;
+    errorEl.classList.add('actief');
+  }
+  function verbergError() {
+    errorEl.classList.remove('actief');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    verbergError();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Bezig...';
+
+    const naam = document.getElementById('naam').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const wachtwoord = document.getElementById('wachtwoord').value;
+
+    if (naam.length < 2) {
+      toonError('Vul je naam in.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Start gratis trial →';
+      return;
+    }
+
+    try {
+      // 1. Account aanmaken via Supabase Auth
+      const { data: authData, error: authErr } = await supabase.auth.signUp({
+        email,
+        password: wachtwoord,
+      });
+      if (authErr) throw authErr;
+      if (!authData.user) throw new Error('Account kon niet aangemaakt worden.');
+
+      const userId = authData.user.id;
+
+      // 2. Gebruiker-rij aanmaken in gebruikers-tabel
+      // (genereer koppelcode 6 cijfers)
+      const koppelcode = Math.floor(100000 + Math.random() * 900000).toString();
+      const trialEind = new Date();
+      trialEind.setDate(trialEind.getDate() + 30);
+
+      const { error: insErr } = await supabase.from('gebruikers').insert({
+        id: userId,
+        naam: naam,
+        koppelcode: koppelcode,
+        koppel_id: userId, // initieel: zelf koppel-id
+        pakket: 'start', // start gratis, trial loopt parallel
+        is_solo: true,
+        trial_actief: true,
+        trial_start: new Date().toISOString(),
+        trial_eind: trialEind.toISOString(),
+      });
+      if (insErr) {
+        console.warn('Insert gebruikers fout:', insErr);
+        // Niet kritiek — trigger maakt rij vaak automatisch aan
+      }
+
+      // 3. Door naar bevestiging
+      window.location.href = '/account-aangemaakt?email=' + encodeURIComponent(email);
+    } catch (err) {
+      console.error('Registreer fout:', err);
+      if (err.message && err.message.includes('already registered')) {
+        toonError('Dit e-mailadres heeft al een account. Log in of gebruik een ander adres.');
+      } else if (err.message && err.message.includes('Password')) {
+        toonError('Wachtwoord is te kort of te zwak. Gebruik minstens 8 tekens.');
+      } else {
+        toonError(err.message || 'Er ging iets mis. Probeer het opnieuw.');
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Start gratis trial →';
+    }
+  });
+</script>
+
+</body>
+</html>

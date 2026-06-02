@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pauzeapp — Voor rust in de communicatie. Voor de kinderen.</title>
+<meta name="description" content="Pauzeapp geeft gescheiden ouders rust om goed te communiceren — voor henzelf én hun kinderen. Even pauzeren voor je verstuurt." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --aubergine:#4C0D30;--aubergine-2:#651641;--accent:#DD6822;--accent-soft:#e8854a;
+    --sand:#FBEFDD;--sand-2:#f5e3c9;--cream:#F0F0F0;--taupe:#807466;--ink:#3a1426;
+    --radius:28px;--radius-sm:18px;--maxw:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Figtree',system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.65;font-size:18px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.12;font-weight:600;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:50;background:rgba(251,239,221,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(128,116,102,.18)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:74px;max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  .logo{font-family:'Fraunces',serif;font-weight:700;font-size:25px;color:var(--aubergine);display:flex;align-items:center;gap:10px}
+  .logo .dot{width:13px;height:13px;border-radius:50%;background:var(--accent)}
+  .nav-links{display:flex;align-items:center;gap:28px;font-weight:500;font-size:16px}
+  .nav-links a.muted{color:var(--taupe)}
+  .nav-links a.muted:hover{color:var(--aubergine)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;padding:13px 26px;border-radius:999px;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s,background .2s}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 22px rgba(221,104,34,.28)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(221,104,34,.34)}
+  .btn-ghost{background:transparent;color:var(--aubergine);border:1.5px solid rgba(76,13,48,.25)}
+  .btn-ghost:hover{border-color:var(--aubergine);background:rgba(76,13,48,.04)}
+  .btn-light{background:var(--sand);color:var(--aubergine)}
+  .btn-light:hover{transform:translateY(-2px);background:#fff}
+
+  /* HERO */
+  .hero{position:relative;background:var(--aubergine);color:var(--cream);padding:96px 0 110px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 78% -10%,rgba(221,104,34,.30),transparent 60%),radial-gradient(700px 500px at -5% 110%,rgba(101,22,65,.9),transparent 55%);pointer-events:none}
+  .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:center}
+  .eyebrow{display:inline-block;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:22px}
+  .hero h1{font-size:clamp(38px,5.4vw,64px);color:#fff;font-weight:600}
+  .hero h1 em{font-style:italic;color:var(--accent-soft);font-weight:500}
+  .hero p.lead{margin-top:24px;font-size:20px;color:rgba(240,240,240,.86);max-width:540px}
+  .hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero-note{margin-top:20px;font-size:15px;color:rgba(240,240,240,.62)}
+  .pausecard{justify-self:center;width:100%;max-width:340px;aspect-ratio:1;border-radius:38px;background:linear-gradient(160deg,rgba(101,22,65,.9),rgba(76,13,48,.4));border:1px solid rgba(221,104,34,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;box-shadow:0 30px 60px rgba(0,0,0,.3)}
+  .pauseglyph{width:108px;height:108px;border-radius:50%;background:rgba(221,104,34,.14);display:flex;align-items:center;justify-content:center;animation:breathe 4.5s ease-in-out infinite}
+  .pauseglyph::before,.pauseglyph::after{content:"";width:13px;height:46px;border-radius:7px;background:var(--accent);margin:0 6px}
+  @keyframes breathe{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(221,104,34,.18)}50%{transform:scale(1.07);box-shadow:0 0 0 22px rgba(221,104,34,0)}}
+  .pausecard span{font-family:'Fraunces',serif;font-style:italic;font-size:19px;color:rgba(240,240,240,.78);text-align:center;padding:0 24px}
+
+  /* SECTION SHELL */
+  section{padding:88px 0}
+  .sec-eyebrow{font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .sec-title{font-size:clamp(30px,3.6vw,44px);color:var(--aubergine);max-width:700px}
+  .sec-sub{margin-top:16px;color:var(--taupe);font-size:19px;max-width:640px}
+  .center{text-align:center}
+  .center .sec-title,.center .sec-sub{margin-left:auto;margin-right:auto}
+
+  /* CIJFERS (dark) */
+  .cijfers{background:var(--aubergine);color:var(--cream)}
+  .cijfers .sec-eyebrow{color:var(--accent-soft)}
+  .cijfers .sec-title{color:#fff}
+  .cijfers .sec-sub{color:rgba(240,240,240,.74)}
+  .cijfer-grid{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .cijfer{padding:6px 10px}
+  .cijfer .num{font-family:'Fraunces',serif;font-size:clamp(46px,5vw,64px);font-weight:600;color:var(--accent-soft);line-height:1}
+  .cijfer .lbl{margin-top:14px;color:rgba(240,240,240,.9);font-size:16px;max-width:260px}
+  .cijfer .src{margin-top:8px;font-size:13px;color:rgba(240,240,240,.5)}
+
+  /* HOE */
+  .steps{margin-top:50px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:step}
+  .step{background:#fff;border-radius:var(--radius);padding:30px 26px;border:1px solid rgba(128,116,102,.15);position:relative}
+  .step::before{counter-increment:step;content:"0" counter(step);font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--accent);display:block;margin-bottom:16px}
+  .step.highlight{background:var(--aubergine);color:var(--cream);border-color:transparent}
+  .step.highlight::before{color:var(--accent-soft)}
+  .step h3{font-size:21px;color:var(--aubergine)}
+  .step.highlight h3{color:#fff}
+  .step p{margin-top:10px;font-size:16px;color:var(--taupe)}
+  .step.highlight p{color:rgba(240,240,240,.82)}
+
+  /* FEATURES */
+  .feat-grid{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .feat{background:#fff;border-radius:var(--radius);padding:30px 28px;border:1px solid rgba(128,116,102,.14)}
+  .feat .ic{width:50px;height:50px;border-radius:15px;background:rgba(221,104,34,.12);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .feat .ic svg{width:26px;height:26px;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  .feat h3{font-size:20px;color:var(--aubergine)}
+  .feat p{margin-top:9px;font-size:15.5px;color:var(--taupe)}
+
+  /* VERHAAL */
+  .verhaal{background:var(--sand-2)}
+  .verhaal .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:54px;align-items:center}
+  .verhaal img{width:100%;max-width:420px;border-radius:24px;display:block;box-shadow:0 18px 44px rgba(76,13,48,.2)}
+  .verhaal h2{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(28px,3.4vw,38px);color:var(--aubergine);margin-bottom:16px}
+  .verhaal p{font-size:18px;color:var(--ink);margin-bottom:22px}
+  .verhaal a.lees{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:600;border-bottom:1.5px solid var(--accent);padding-bottom:3px}
+  .verhaal a.lees:hover{opacity:.75}
+
+  /* PIJLERS */
+  .pillars .wrap{background:var(--aubergine);border-radius:36px;padding:54px 48px;color:var(--cream)}
+  .pillars .sec-eyebrow{color:var(--accent-soft)}
+  .pillars .sec-title{color:#fff;font-size:clamp(26px,3vw,34px)}
+  .pillar-grid{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .pillar h3{font-size:21px;color:#fff;display:flex;align-items:center;gap:10px}
+  .pillar h3 .b{width:34px;height:34px;border-radius:10px;background:rgba(221,104,34,.2);color:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:17px}
+  .pillar p{margin-top:10px;color:rgba(240,240,240,.78);font-size:15.5px}
+
+  /* TESTIMONIAL */
+  .testi{background:var(--sand)}
+  .testi .wrap{max-width:840px;text-align:center}
+  .testi blockquote{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(23px,2.8vw,30px);line-height:1.5;color:var(--aubergine)}
+  .testi blockquote::before{content:"\201C";color:var(--accent);font-size:54px;line-height:0;vertical-align:-18px;margin-right:6px}
+  .testi .who{margin-top:28px;font-weight:600;color:var(--aubergine)}
+  .testi .who span{display:block;font-weight:400;color:var(--taupe);font-size:15px}
+
+  /* PRIJZEN */
+  .trial-banner{margin:0 auto 44px;max-width:660px;text-align:center;background:rgba(221,104,34,.1);border:1px solid rgba(221,104,34,.3);border-radius:999px;padding:13px 28px;color:var(--aubergine);font-weight:600;font-size:16px}
+  .price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+  .price{background:#fff;border-radius:var(--radius);padding:32px 26px;border:1px solid rgba(128,116,102,.16);display:flex;flex-direction:column}
+  .price.feature{background:var(--aubergine);color:var(--cream);border-color:transparent;box-shadow:0 22px 44px rgba(76,13,48,.22)}
+  .price .tier{font-weight:600;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--taupe)}
+  .price.feature .tier{color:var(--accent-soft)}
+  .price .amt{font-family:'Fraunces',serif;font-size:38px;font-weight:600;color:var(--aubergine);margin:14px 0 2px;line-height:1}
+  .price.feature .amt{color:#fff}
+  .price .per{font-size:15px;color:var(--taupe);min-height:22px}
+  .price.feature .per{color:rgba(240,240,240,.7)}
+  .price ul{list-style:none;margin:22px 0 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .price li{position:relative;padding-left:26px;font-size:15px;color:var(--ink)}
+  .price.feature li{color:rgba(240,240,240,.9)}
+  .price li::before{content:"";position:absolute;left:0;top:8px;width:11px;height:11px;border-radius:50%;background:var(--accent)}
+  .badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:999px}
+  .price-rel{position:relative}
+
+  /* FAQ */
+  .faq .wrap{max-width:820px}
+  .faq-item{background:#fff;border-radius:var(--radius-sm);padding:24px 28px;margin-bottom:14px;border:1px solid rgba(128,116,102,.14)}
+  .faq-item h3{font-size:19px;color:var(--aubergine)}
+  .faq-item p{margin-top:9px;color:var(--taupe);font-size:16px}
+
+  /* PRO */
+  .pro .wrap{background:var(--sand-2);border-radius:36px;padding:56px 50px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;border:1px solid rgba(128,116,102,.18)}
+  .pro h2{font-size:clamp(28px,3.2vw,38px);color:var(--aubergine)}
+  .pro p{margin-top:16px;color:var(--ink);font-size:18px}
+  .pro .pro-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .pro-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .pro-list li{background:var(--sand);border-radius:var(--radius-sm);padding:16px 20px;font-weight:500;font-size:16px;border:1px solid rgba(128,116,102,.16)}
+  .pro-list li b{color:var(--accent)}
+
+  /* BRONNEN */
+  .bronnen{padding:0 0 56px}
+  .bronnen p{max-width:760px;margin:0 auto;text-align:center;font-size:12.5px;line-height:1.7;color:var(--taupe)}
+
+  /* FOOTER */
+  footer{background:var(--aubergine);color:rgba(240,240,240,.72);padding:64px 0 38px}
+  .foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:34px}
+  .foot-brand .logo{color:#fff;margin-bottom:14px}
+  .foot-brand p{max-width:300px;font-size:15px}
+  .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .foot-col h4{font-family:'Figtree',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:14px;font-weight:600}
+  .foot-col a{display:block;margin-bottom:10px;font-size:15px;color:rgba(240,240,240,.78)}
+  .foot-col a:hover{color:#fff}
+  .foot-bottom{margin-top:26px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:14px;color:rgba(240,240,240,.5)}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:920px){
+    .hero .wrap{grid-template-columns:1fr;gap:44px}
+    .pausecard{max-width:300px}
+    .cijfer-grid,.steps,.feat-grid,.price-grid,.pillar-grid{grid-template-columns:1fr 1fr}
+    .verhaal .wrap,.pro .wrap{grid-template-columns:1fr}
+    .verhaal img{margin:0 auto}
+  }
+  @media(max-width:620px){
+    body{font-size:17px}
+    .nav-links a.muted{display:none}
+    .cijfer-grid,.steps,.feat-grid,.price-grid,.pillar-grid{grid-template-columns:1fr}
+    .pro .wrap,.pillars .wrap{padding:38px 26px}
+    section{padding:60px 0}
+    .hero{padding:60px 0 74px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="/" class="logo"><span class="dot"></span>Pauzeapp</a>
+    <div class="nav-links">
+      <a href="#hoe" class="muted">Hoe het werkt</a>
+      <a href="#prijzen" class="muted">Prijzen</a>
+      <a href="verhaal/" class="muted">Het verhaal</a>
+      <a href="#professionals" class="muted">Voor professionals</a>
+      <a href="login/" class="muted">Inloggen</a>
+      <a href="registreer/" class="btn btn-primary">Start gratis</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Voor gescheiden ouders</span>
+      <h1>Voor rust in de communicatie.<br><em>Voor de kinderen.</em></h1>
+      <p class="lead">Pauzeapp geeft gescheiden ouders rust om goed te communiceren — voor henzelf én hun kinderen. Even pauzeren voordat je verstuurt. Een rustigere toon, een rustiger gezin.</p>
+      <div class="hero-cta">
+        <a href="registreer/" class="btn btn-primary">Start gratis →</a>
+        <a href="#hoe" class="btn btn-light">Bekijk hoe het werkt</a>
+      </div>
+      <p class="hero-note">30 dagen gratis Verbonden proberen · geen betaalgegevens nodig om te starten.</p>
+    </div>
+    <div class="pausecard">
+      <div class="pauseglyph"></div>
+      <span>Even pauze. Dan pas verzenden.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CIJFERS -->
+<section class="cijfers" id="waarom">
+  <div class="wrap">
+    <span class="sec-eyebrow">Waarom Pauzeapp</span>
+    <h2 class="sec-title">Een scheiding raakt niet alleen jou. Ze raakt vooral de kinderen.</h2>
+    <p class="sec-sub">De manier waarop ouders met elkaar communiceren bepaalt voor een groot deel hoe een kind de scheiding ervaart. Daar zit Pauzeapp.</p>
+    <div class="cijfer-grid">
+      <div class="cijfer reveal">
+        <div class="num">43.000</div>
+        <div class="lbl">kinderen maken jaarlijks mee dat hun ouders uit elkaar gaan</div>
+        <div class="src">Bron: CBS, 2023</div>
+      </div>
+      <div class="cijfer reveal">
+        <div class="num">1 op 5</div>
+        <div class="lbl">ouders gaat niet in goed onderling overleg uit elkaar</div>
+        <div class="src">Bron: De Rechtspraak</div>
+      </div>
+      <div class="cijfer reveal">
+        <div class="num">1 op 4</div>
+        <div class="lbl">kinderen in Nederland woont niet bij beide ouders</div>
+        <div class="src">Bron: CBS, 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOE HET WERKT -->
+<section id="hoe">
+  <div class="wrap">
+    <span class="sec-eyebrow">Hoe het werkt</span>
+    <h2 class="sec-title">Tussen je emotie en je verzonden bericht zit nu een adempauze.</h2>
+    <p class="sec-sub">Geen filter dat je tegenhoudt. Een moment dat je helpt om te sturen — voordat je iets verstuurt waar je later spijt van hebt.</p>
+    <div class="steps">
+      <div class="step reveal"><h3>Schrijf het op</h3><p>Typ je bericht zoals je het voelt. Eerlijk, ongefilterd, in jouw woorden.</p></div>
+      <div class="step highlight reveal"><h3>Pauze</h3><p>Een korte adempauze van 10 tot 15 seconden tussen de emotie en het verzenden. Het belangrijkste moment.</p></div>
+      <div class="step reveal"><h3>Pauzeapp verzacht</h3><p>Kies een rustigere toon: warm, neutraal of kort. Je boodschap blijft volledig — de scherpte gaat eraf.</p></div>
+      <div class="step reveal"><h3>Verstuur met rust</h3><p>Je verstuurt een bericht dat het gesprek opent in plaats van escaleert.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <span class="sec-eyebrow">Eén rustige plek</span>
+    <h2 class="sec-title">Alles voor co-ouders, op één plek.</h2>
+    <p class="sec-sub">Geen losse appjes, geen gedoe via de mail. Alles wat de kinderen raakt, rustig bij elkaar.</p>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></div>
+        <h3>Berichten verzachten</h3>
+        <p>Pauzeapp herschrijft je bericht in een rustigere toon. De boodschap blijft, de scherpte verdwijnt.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Door kinder-ogen</h3>
+        <p>Bekijk een lastige situatie vanuit het perspectief van je kind. Voor meer begrip.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+        <h3>Wat bedoelt je co-ouder?</h3>
+        <p>Begrijp wat er achter een bericht zit, voordat je reageert vanuit emotie.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></div>
+        <h3>Gedeelde agenda</h3>
+        <p>Wisseldagen, afspraken en activiteiten — voor beide ouders zichtbaar.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div>
+        <h3>Momenten delen</h3>
+        <p>Een gedeeld fotoalbum, zodat beide ouders de mooie momenten meekrijgen.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
+        <h3>Ouderschapsplan</h3>
+        <p>Stel samen het ouderschapsplan op en houd alle afspraken bij de hand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERHAAL TEASER -->
+<section class="verhaal" id="verhaal">
+  <div class="wrap">
+    <img src="maurice.png" alt="Maurice Diepeveen, oprichter van Pauzeapp" />
+    <div>
+      <span class="sec-eyebrow">Het verhaal achter Pauzeapp</span>
+      <h2>Waarom ik Pauzeapp maakte</h2>
+      <p>Ik was zeven toen mijn ouders scheidden. Wat ik me het meest herinner is niet de scheiding zelf — maar de stilte daarna. Dertig jaar later stond ik zelf voor dezelfde keuze, met twee kleine kinderen. En ik wilde het anders doen.</p>
+      <a href="verhaal/" class="lees">Lees mijn verhaal →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PIJLERS -->
+<section class="pillars">
+  <div class="wrap">
+    <span class="sec-eyebrow">De gedachte erachter</span>
+    <h2 class="sec-title">Drie principes, één doel: rust.</h2>
+    <div class="pillar-grid">
+      <div class="pillar reveal"><h3><span class="b">F</span>Focusbewaking</h3><p>Blijf bij wat er nú echt toe doet: de kinderen. Niet het oude gelijk, niet de oude pijn.</p></div>
+      <div class="pillar reveal"><h3><span class="b">G</span>Groeidenken</h3><p>Elke reactie is een kans om het een beetje beter te doen dan de vorige.</p></div>
+      <div class="pillar reveal"><h3><span class="b">W</span>Waardebewustzijn</h3><p>Verstuur vanuit wat je echt belangrijk vindt, niet vanuit het eerste gevoel van het moment.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testi">
+  <div class="wrap">
+    <blockquote>Ik typ nog steeds wat ik denk. Maar wat eruit komt, is wat ik écht bedoel. Onze chats voelen weer als gesprekken.</blockquote>
+    <div class="who">Rosalie<span>Eerste gebruiker van Pauzeapp</span></div>
+  </div>
+</section>
+
+<!-- PRIJZEN -->
+<section id="prijzen">
+  <div class="wrap">
+    <span class="sec-eyebrow center" style="display:block">Prijzen</span>
+    <h2 class="sec-title center" style="margin-bottom:10px">Begin gratis. Upgrade wanneer je er klaar voor bent.</h2>
+    <div class="trial-banner">✦ 30 dagen gratis Verbonden — voor iedereen, zonder betaalgegevens</div>
+    <div class="price-grid">
+      <div class="price reveal">
+        <div class="tier">Start</div><div class="amt">Gratis</div><div class="per">Verbonden of solo</div>
+        <ul><li>Berichten verzachten (met maandlimiet)</li><li>Agenda, logboek en notities</li><li>Chat met je co-ouder</li></ul>
+        <a href="registreer/" class="btn btn-ghost">Start gratis</a>
+      </div>
+      <div class="price feature reveal price-rel">
+        <span class="badge">Populair</span>
+        <div class="tier">Verbonden</div><div class="amt">€8,99</div><div class="per">per maand · per stel</div>
+        <ul><li>Onbeperkt verzachten</li><li>Door kinder-ogen kijken</li><li>Wat bedoelt je co-ouder?</li><li>Kosten delen & ouderschapsplan</li><li>Gedeeld fotoalbum</li></ul>
+        <a href="registreer/" class="btn btn-light">Kies Verbonden</a>
+      </div>
+      <div class="price reveal">
+        <div class="tier">Solo Verbonden</div><div class="amt">€4,50</div><div class="per">per maand · één ouder</div>
+        <ul><li>Alle Verbonden-functies</li><li>Voor ouders zonder gekoppelde co-ouder</li><li>Verzachten & coach onbeperkt</li></ul>
+        <a href="registreer/" class="btn btn-ghost">Kies Solo</a>
+      </div>
+      <div class="price reveal">
+        <div class="tier">Mediator & PDF</div><div class="amt">€18,99</div><div class="per">eenmalig · 6 maanden geldig</div>
+        <ul><li>PDF-export van afspraken</li><li>Sturen naar je eigen mediator</li><li>Co-ouder altijd in CC</li><li>Wederzijds akkoord vereist</li></ul>
+        <a href="account/" class="btn btn-ghost">Toevoegen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="wrap">
+    <span class="sec-eyebrow center" style="display:block">Veelgestelde vragen</span>
+    <h2 class="sec-title center" style="margin-bottom:46px">Goed om te weten.</h2>
+    <div class="faq-item"><h3>Verandert Pauzeapp wat ik wil zeggen?</h3><p>Nee. Pauzeapp verzacht alleen de toon van je bericht. De inhoud en je boodschap blijven volledig van jou.</p></div>
+    <div class="faq-item"><h3>Moet mijn co-ouder ook meedoen?</h3><p>Voor het delen van agenda, foto's en berichten wel. Maar functies zoals berichten verzachten en door kinder-ogen kijken kun je ook alleen gebruiken (Solo).</p></div>
+    <div class="faq-item"><h3>Is mijn informatie veilig?</h3><p>Je gegevens worden veilig binnen de EU opgeslagen en alleen gedeeld met je gekoppelde co-ouder. Je notities blijven privé op je eigen apparaat.</p></div>
+    <div class="faq-item"><h3>Kan ik maandelijks opzeggen?</h3><p>Ja. Op elk moment opzegbaar via je account. Bij opzegging stopt de eerstvolgende incasso en houd je toegang tot het einde van je betaalde maand.</p></div>
+    <div class="faq-item"><h3>Werkt Pauzeapp samen met mediators?</h3><p>Nee, en dat is bewust. Met de Mediator &amp; PDF-functie stuur je zélf een nette PDF naar de mediator van jóuw keuze, met je co-ouder altijd in de CC. Jij houdt de regie; Pauzeapp faciliteert alleen technisch.</p></div>
+  </div>
+</section>
+
+<!-- PROFESSIONALS -->
+<section class="pro" id="professionals">
+  <div class="wrap">
+    <div>
+      <span class="sec-eyebrow">Voor mediators &amp; gemeenten</span>
+      <h2>Rustige ouders, betere uitkomsten.</h2>
+      <p>Pauzeapp verzacht de communicatie tussen ouders waar het er het meest toe doet. Ouders delen hun afspraken zelf — als nette PDF naar hun eigen mediator, met de co-ouder altijd in de CC. U houdt het overzicht, de regie blijft bij de ouders.</p>
+      <div class="pro-cta">
+        <a href="mailto:info@pauzeapp.nl" class="btn btn-primary">Neem contact op</a>
+        <a href="#hoe" class="btn btn-ghost">Hoe het werkt</a>
+      </div>
+    </div>
+    <ul class="pro-list">
+      <li><b>Mediators</b> — ouders sturen hun PDF rechtstreeks naar u, co-ouder in CC.</li>
+      <li><b>Gemeenten</b> — pilot of doorverwijzing voor ouders in uw wijkteams.</li>
+      <li><b>Regie bij de ouder</b> — de klant kiest de mediator en verstuurt zelf.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- BRONNEN -->
+<section class="bronnen">
+  <div class="wrap">
+    <p>Bronnen: aantal kinderen dat jaarlijks een scheiding meemaakt en het aandeel kinderen dat niet bij beide ouders woont — Centraal Bureau voor de Statistiek (CBS). Aandeel ouders dat niet in goed onderling overleg uit elkaar gaat — De Rechtspraak. De CBS-cijfers betreffen alle ouders die uit elkaar gaan: gehuwd, geregistreerd partnerschap én ongehuwd samenwonend. Cijfers betreffen de meest recente beschikbare jaren.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="/" class="logo"><span class="dot"></span>Pauzeapp</a>
+        <p>Voor rust in de communicatie. Voor de kinderen. Gebouwd vanuit eigen ervaring met co-ouderschap.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="#hoe">Hoe het werkt</a>
+          <a href="#prijzen">Prijzen</a>
+          <a href="verhaal/">Het verhaal</a>
+          <a href="registreer/">Start gratis</a>
+          <a href="login/">Inloggen</a>
+        </div>
+        <div class="foot-col">
+          <h4>Juridisch</h4>
+          <a href="privacy/">Privacy</a>
+          <a href="voorwaarden/">Voorwaarden</a>
+        </div>
+        <div class="foot-col">
+          <h4>Contact</h4>
+          <a href="mailto:info@pauzeapp.nl">info@pauzeapp.nl</a>
+          <a href="#professionals">Voor professionals</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Pauzeapp · een product van MRC Comfort · Haaksbergen</span>
+      <span>Made with rust in Twente 🧡</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*60)+'ms';io.observe(el)});
+</script>
+</body>
+</html>
