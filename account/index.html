@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mijn account — Pauzeapp</title>
+<title>Mijn account â€” Pauzeapp</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
 
@@ -110,12 +110,12 @@
         <div class="prijs-grid">
           <div class="prijs-card" data-pakket="verbonden">
             <h3>Verbonden (stel)</h3>
-            <div class="prijs">€8,99<span> / maand</span></div>
+            <div class="prijs">â‚¬8,99<span> / maand</span></div>
             <p class="desc">Voor 2 ouders samen. Alle premium features.</p>
           </div>
           <div class="prijs-card" data-pakket="solo">
             <h3>Solo Verbonden</h3>
-            <div class="prijs">€4,50<span> / maand</span></div>
+            <div class="prijs">â‚¬4,50<span> / maand</span></div>
             <p class="desc">Voor 1 ouder. Alle premium features behalve de gedeelde functies.</p>
           </div>
         </div>
@@ -125,17 +125,17 @@
       <!-- MEDIATOR ADD-ON -->
       <div class="card">
         <h2>Mediator en PDF-download</h2>
-        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 16px;">Eenmalig <strong>€18,99</strong> voor 6 maanden toegang tot PDF-export en mediator-flow.</p>
+        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 16px;">Eenmalig <strong>â‚¬18,99</strong> voor 6 maanden toegang tot PDF-export en mediator-flow.</p>
         <button class="btn-secondary" id="addon-btn">Aanschaffen</button>
-        <p id="addon-actief" style="color: var(--groen); font-size: 13px; margin-top: 12px; display: none;">✓ Actief tot <span id="addon-eind"></span></p>
+        <p id="addon-actief" style="color: var(--groen); font-size: 13px; margin-top: 12px; display: none;">âœ“ Actief tot <span id="addon-eind"></span></p>
       </div>
 
       <!-- ACCOUNT INFO -->
       <div class="card">
         <h2>Accountgegevens</h2>
-        <div class="info-rij"><span class="label">E-mailadres</span><span class="waarde" id="info-email">—</span></div>
-        <div class="info-rij"><span class="label">Naam</span><span class="waarde" id="info-naam">—</span></div>
-        <div class="info-rij"><span class="label">Koppelcode</span><span class="waarde" id="info-koppelcode">—</span></div>
+        <div class="info-rij"><span class="label">E-mailadres</span><span class="waarde" id="info-email">â€”</span></div>
+        <div class="info-rij"><span class="label">Naam</span><span class="waarde" id="info-naam">â€”</span></div>
+        <div class="info-rij"><span class="label">Koppelcode</span><span class="waarde" id="info-koppelcode">â€”</span></div>
       </div>
 
       <!-- OPZEGGEN -->
@@ -150,14 +150,14 @@
 </div>
 
 <footer>
-  <p>© 2026 Pauzeapp · <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a></p>
+  <p>Â© 2026 Pauzeapp Â· <a href="/voorwaarden">Voorwaarden</a> Â· <a href="/privacy">Privacy</a></p>
 </footer>
 
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
   const SUPABASE_URL = 'https://zxlqnofdhyzwnuggtbsa.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // ← vervang
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // â† vervang
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   let userId = null;
@@ -185,10 +185,10 @@
     // Vul UI
     document.getElementById('welkom-tekst').textContent = `Hoi ${gebruiker.naam || ''}!`;
     document.getElementById('info-email').textContent = session.user.email;
-    document.getElementById('info-naam').textContent = gebruiker.naam || '—';
-    document.getElementById('info-koppelcode').textContent = gebruiker.koppelcode || '—';
+    document.getElementById('info-naam').textContent = gebruiker.naam || 'â€”';
+    document.getElementById('info-koppelcode').textContent = gebruiker.koppelcode || 'â€”';
 
-    const pakketNaam = { 'basic': 'Start (gratis)', 'start': 'Start (gratis)', 'verbonden': 'Verbonden — €8,99/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Start';
+    const pakketNaam = { 'basic': 'Start (gratis)', 'start': 'Start (gratis)', 'verbonden': 'Verbonden â€” â‚¬8,99/mnd', 'solo': 'Solo Verbonden â€” â‚¬4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Start';
     document.getElementById('huidig-pakket').textContent = pakketNaam;
 
     // Trial
@@ -232,8 +232,8 @@
       card.classList.add('actief');
       gekozenPakket = card.dataset.pakket;
       const koopBtn = document.getElementById('koop-btn');
-      const prijsTekst = gekozenPakket === 'verbonden' ? '€8,99/mnd' : '€4,50/mnd';
-      koopBtn.textContent = `Aankopen voor ${prijsTekst} →`;
+      const prijsTekst = gekozenPakket === 'verbonden' ? 'â‚¬8,99/mnd' : 'â‚¬4,50/mnd';
+      koopBtn.textContent = `Aankopen voor ${prijsTekst} â†’`;
       koopBtn.disabled = false;
     });
   });
@@ -269,7 +269,7 @@
     } catch (err) {
       alert('Er ging iets mis bij het starten van de betaling: ' + err.message);
       btn.disabled = false;
-      btn.textContent = `Aankopen →`;
+      btn.textContent = `Aankopen â†’`;
     }
   });
 

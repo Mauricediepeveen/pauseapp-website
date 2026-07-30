@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account aanmaken — Pauzeapp</title>
+<title>Account aanmaken â€” Pauzeapp</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
 
@@ -105,7 +105,7 @@
   <div class="wrap">
     <div class="nav">
       <a href="/" class="logo"><img src="/logo-icon.png" alt="" style="height:2em;vertical-align:-0.55em;margin-right:10px;border-radius:8px;">Pauze<span>app</span></a>
-      <a href="/login" style="color: var(--aubergine); font-weight: 600; text-decoration: none;">Inloggen →</a>
+      <a href="/login" style="color: var(--aubergine); font-weight: 600; text-decoration: none;">Inloggen â†’</a>
     </div>
   </div>
 </header>
@@ -134,7 +134,7 @@
         <label for="wachtwoord">WACHTWOORD</label>
         <input type="password" id="wachtwoord" placeholder="Minstens 8 tekens" required minlength="8">
       </div>
-      <button type="submit" class="btn-primary" id="submit-btn">Start gratis trial →</button>
+      <button type="submit" class="btn-primary" id="submit-btn">Start gratis trial â†’</button>
     </form>
 
     <p class="alt">Al een account? <a href="/login">Log hier in</a></p>
@@ -142,14 +142,14 @@
 </div>
 
 <footer>
-  <p>© 2026 Pauzeapp · <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a></p>
+  <p>Â© 2026 Pauzeapp Â· <a href="/voorwaarden">Voorwaarden</a> Â· <a href="/privacy">Privacy</a></p>
 </footer>
 
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
   const SUPABASE_URL = 'https://zxlqnofdhyzwnuggtbsa.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // ← Maurice: vervang met je echte anon key
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // â† Maurice: vervang met je echte anon key
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const form = document.getElementById('registreer-form');
@@ -177,7 +177,7 @@
     if (naam.length < 2) {
       toonError('Vul je naam in.');
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Start gratis trial →';
+      submitBtn.textContent = 'Start gratis trial â†’';
       return;
     }
 
@@ -211,7 +211,7 @@
       });
       if (insErr) {
         console.warn('Insert gebruikers fout:', insErr);
-        // Niet kritiek — trigger maakt rij vaak automatisch aan
+        // Niet kritiek â€” trigger maakt rij vaak automatisch aan
       }
 
       // 3. Door naar bevestiging
@@ -226,7 +226,7 @@
         toonError(err.message || 'Er ging iets mis. Probeer het opnieuw.');
       }
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Start gratis trial →';
+      submitBtn.textContent = 'Start gratis trial â†’';
     }
   });
 </script>
