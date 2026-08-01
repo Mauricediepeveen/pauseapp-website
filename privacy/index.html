@@ -3,50 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacybeleid — Pauzeapp</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Privacybeleid &mdash; Pauzeapp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root { --groen: #1B4332; --oranje: #D4621A; --zand: #F5ECD7; --donker: #3D2010; --aubergine: #4C0D30; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'DM Sans', sans-serif; background: var(--zand); color: var(--donker); }
-nav { background: var(--aubergine); padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; color: white; text-decoration: none; }
-.nav-logo span { color: var(--oranje); }
-.nav-back { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; }
-.nav-back:hover { color: white; }
-.container { max-width: 720px; margin: 0 auto; padding: 60px 24px 100px; }
-.label { font-size: 11px; font-weight: 700; color: var(--oranje); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
-h1 { font-family: 'Playfair Display', serif; font-size: 40px; color: var(--aubergine); margin-bottom: 8px; line-height: 1.15; }
-.datum { font-size: 13px; color: rgba(61,32,16,0.4); margin-bottom: 48px; }
-h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--aubergine); margin: 40px 0 12px; }
-h3 { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; color: var(--aubergine); margin: 20px 0 8px; }
-p { font-size: 15px; line-height: 1.8; color: rgba(61,32,16,0.75); margin-bottom: 16px; }
-ul { margin: 0 0 16px 20px; }
-li { font-size: 15px; line-height: 1.8; color: rgba(61,32,16,0.75); margin-bottom: 6px; }
-a { color: var(--oranje); }
-strong { color: var(--donker); font-weight: 600; }
-.divider { height: 1px; background: rgba(61,32,16,0.08); margin: 40px 0; }
-.callout { background: rgba(212,98,26,0.08); border-left: 3px solid var(--oranje); padding: 16px 20px; margin: 20px 0; border-radius: 4px; }
-.callout p { margin-bottom: 0; }
-footer { background: var(--aubergine); padding: 32px 40px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.4); }
-footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  :root{
+    --aubergine:#4C0D30;--aubergine-2:#651641;--accent:#DD6822;--accent-soft:#e8854a;
+    --sand:#FBEFDD;--sand-2:#f5e3c9;--cream:#F0F0F0;--taupe:#807466;--ink:#3a1426;
+    --radius:28px;--radius-sm:18px;--maxw:820px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Figtree',system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;font-weight:600;letter-spacing:-.01em;color:var(--aubergine)}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{color:var(--aubergine);font-weight:600}
+  /* NAV */
+  header{position:sticky;top:0;z-index:50;background:rgba(251,239,221,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(128,116,102,.18)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:74px;max-width:1140px;margin:0 auto;padding:0 26px}
+  .logo{font-family:'Fraunces',serif;font-weight:700;font-size:25px;color:var(--aubergine);display:flex;align-items:center;gap:10px}
+  .logo .dot{width:13px;height:13px;border-radius:50%;background:var(--accent)}
+  .nav-back{font-weight:500;font-size:15px;color:var(--taupe)}
+  .nav-back:hover{color:var(--aubergine);text-decoration:none}
+  /* HERO */
+  .hero{background:var(--aubergine);color:var(--cream);padding:64px 0 56px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 400px at 82% -20%,rgba(221,104,34,.28),transparent 60%);pointer-events:none}
+  .hero .wrap{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  .eyebrow{display:inline-block;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:16px}
+  .hero h1{font-size:clamp(34px,5vw,50px);color:#fff;margin-bottom:10px}
+  .hero .datum{font-size:14px;color:rgba(240,240,240,.6)}
+  /* CONTENT */
+  .container{max-width:var(--maxw);margin:0 auto;padding:56px 26px 90px}
+  .container>p{margin-bottom:18px;color:rgba(58,20,38,.82)}
+  h2{font-size:26px;margin:44px 0 14px;padding-top:8px}
+  h3{font-family:'Figtree',sans-serif;font-size:17px;font-weight:700;color:var(--aubergine);margin:26px 0 8px}
+  .container p{margin-bottom:16px;color:rgba(58,20,38,.82)}
+  ul{margin:0 0 18px 22px}
+  li{margin-bottom:8px;color:rgba(58,20,38,.82)}
+  .divider{height:1px;background:rgba(128,116,102,.22);margin:44px 0}
+  .callout{background:rgba(221,104,34,.08);border-left:3px solid var(--accent);padding:18px 22px;margin:22px 0;border-radius:12px}
+  .callout p{margin-bottom:0}
+  /* FOOTER */
+  footer{background:var(--aubergine);color:rgba(240,240,240,.55);padding:34px 26px;text-align:center;font-size:13px}
+  footer a{color:rgba(240,240,240,.75)}
+  @media(max-width:600px){
+    .hero{padding:48px 0 40px}
+    .container{padding:40px 22px 70px}
+    h2{font-size:23px}
+  }
 </style>
 </head>
 <body>
-
-<nav>
-  <a href="/" class="nav-logo">pauze<span>app</span></a>
-  <a href="/" class="nav-back">← Terug naar home</a>
-</nav>
-
+<header>
+  <nav>
+    <a href="/" class="logo"><img src="/logo-icon.png" alt="" style="height:2em;border-radius:8px;">Pauzeapp</a>
+    <a href="/" class="nav-back">&larr; Terug naar home</a>
+  </nav>
+</header>
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Juridisch</span>
+    <h1>Privacybeleid</h1>
+    <p class="datum">Laatst bijgewerkt: 4 juli 2026</p>
+  </div>
+</section>
 <div class="container">
-  <div class="label">Juridisch</div>
-  <h1>Privacybeleid</h1>
-  <p class="datum">Laatst bijgewerkt: 4 juli 2026</p>
+<p>Pauzeapp respecteert uw privacy en verwerkt persoonsgegevens zorgvuldig en in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG). In dit privacybeleid leggen wij uit welke gegevens wij verzamelen, waarom, en hoe wij deze beschermen.</p>
 
-  <p>Pauzeapp respecteert uw privacy en verwerkt persoonsgegevens zorgvuldig en in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG). In dit privacybeleid leggen wij uit welke gegevens wij verzamelen, waarom, en hoe wij deze beschermen.</p>
-
-  <div class="divider"></div>
+  
 
   <h2>1. Wie zijn wij?</h2>
   <p>Pauzeapp is een co-ouderschap communicatie-app ontwikkeld door Maurice Diepeveen, gevestigd in Haaksbergen, Nederland. U kunt contact opnemen via <a href="mailto:info@pauzeapp.nl">info@pauzeapp.nl</a>.</p>
@@ -62,7 +88,7 @@ footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
     <li>E-mailadres (voor registratie en inloggen)</li>
     <li>Naam (voornaam, optioneel)</li>
     <li>Voornamen en geboortedata van kinderen (door u zelf ingevoerd)</li>
-    <li>Bankgegevens (alleen bij Verbonden of Mediator, verwerkt door Mollie — niet door Pauzeapp opgeslagen)</li>
+    <li>Bankgegevens (alleen bij Verbonden of Mediator, verwerkt door Mollie â€” niet door Pauzeapp opgeslagen)</li>
     <li>IP-adres en device-informatie (anoniem, voor technische werking)</li>
   </ul>
 
@@ -78,7 +104,7 @@ footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
   </ul>
 
   <h3>3.3 Gegevens van derden die u aan ons verstrekt</h3>
-  <p>Door gebruik van Pauzeapp kunt u gegevens van andere personen invoeren of delen — bijvoorbeeld voornamen en geboortedata van uw kinderen, of foto's en informatie over uw co-ouder. <strong>U bent zelf verantwoordelijk</strong> voor het verkrijgen van toestemming van betrokken personen wanneer u hun gegevens via Pauzeapp deelt. Wij gaan ervan uit dat u gerechtigd bent deze gegevens te delen.</p>
+  <p>Door gebruik van Pauzeapp kunt u gegevens van andere personen invoeren of delen â€” bijvoorbeeld voornamen en geboortedata van uw kinderen, of foto's en informatie over uw co-ouder. <strong>U bent zelf verantwoordelijk</strong> voor het verkrijgen van toestemming van betrokken personen wanneer u hun gegevens via Pauzeapp deelt. Wij gaan ervan uit dat u gerechtigd bent deze gegevens te delen.</p>
 
   <h3>3.4 Versturen van gegevens naar een mediator</h3>
   <p>Met de Mediator en PDF-download functie kunt u zelf gegevens uit Pauzeapp via e-mail versturen naar een mediator van uw keuze. Pauzeapp werkt hiervoor <strong>niet samen</strong> met mediators en heeft geen verwerkersovereenkomst met hen. Bij gebruik van deze functie geldt:</p>
@@ -105,23 +131,23 @@ footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
   <h2>5. Grondslag voor verwerking</h2>
   <p>Wij verwerken uw gegevens op basis van:</p>
   <ul>
-    <li><strong>Uitvoering van een overeenkomst</strong> — u heeft een account aangemaakt en akkoord gegeven op onze voorwaarden</li>
-    <li><strong>Toestemming</strong> — voor het sturen van uitnodigingen aan uw co-ouder</li>
-    <li><strong>Gerechtvaardigd belang</strong> — voor het verbeteren van onze dienst</li>
+    <li><strong>Uitvoering van een overeenkomst</strong> â€” u heeft een account aangemaakt en akkoord gegeven op onze voorwaarden</li>
+    <li><strong>Toestemming</strong> â€” voor het sturen van uitnodigingen aan uw co-ouder</li>
+    <li><strong>Gerechtvaardigd belang</strong> â€” voor het verbeteren van onze dienst</li>
   </ul>
 
   <h2>6. Met wie delen wij gegevens?</h2>
   <p>Wij delen gegevens alleen met door ons geselecteerde verwerkers, allen met EU-vestiging of EU-passende waarborgen:</p>
   <ul>
-    <li><strong>Supabase</strong> (database en opslag) — EU-regio</li>
-    <li><strong>Mollie</strong> (betalingen) — Nederland; Mollie verwerkt uw bankgegevens. Pauzeapp slaat zelf geen bankgegevens op</li>
-    <li><strong>Anthropic</strong> (AI-verwerking) — gevestigd in de <strong>Verenigde Staten</strong>. Verwerker met verwerkersovereenkomst (DPA) en EU-Standaardcontractbepalingen (SCC's) als doorgiftewaarborg. Geen permanente opslag van berichten, geen gebruik voor model-training</li>
-    <li><strong>Resend</strong> (e-mailverzending) — EU-regio, voor trial-mailings en transactionele e-mails</li>
+    <li><strong>Supabase</strong> (database en opslag) â€” EU-regio</li>
+    <li><strong>Mollie</strong> (betalingen) â€” Nederland; Mollie verwerkt uw bankgegevens. Pauzeapp slaat zelf geen bankgegevens op</li>
+    <li><strong>Anthropic</strong> (AI-verwerking) â€” gevestigd in de <strong>Verenigde Staten</strong>. Verwerker met verwerkersovereenkomst (DPA) en EU-Standaardcontractbepalingen (SCC's) als doorgiftewaarborg. Geen permanente opslag van berichten, geen gebruik voor model-training</li>
+    <li><strong>Resend</strong> (e-mailverzending) â€” EU-regio, voor trial-mailings en transactionele e-mails</li>
   </ul>
   <p>Wij <strong>verkopen of verhuren persoonsgegevens nooit</strong> aan derden. Wij tonen geen advertenties in de app.</p>
 
   <h3>6.1 Verwerkersovereenkomsten</h3>
-  <p>Met alle hierboven genoemde verwerkers hebben wij een <strong>verwerkersovereenkomst (DPA — Data Processing Agreement)</strong> afgesloten. Hierin is vastgelegd dat zij uw persoonsgegevens uitsluitend op onze instructie verwerken, gepaste beveiligingsmaatregelen treffen en de AVG naleven.</p>
+  <p>Met alle hierboven genoemde verwerkers hebben wij een <strong>verwerkersovereenkomst (DPA â€” Data Processing Agreement)</strong> afgesloten. Hierin is vastgelegd dat zij uw persoonsgegevens uitsluitend op onze instructie verwerken, gepaste beveiligingsmaatregelen treffen en de AVG naleven.</p>
 
   <h3>6.2 Doorgifte buiten de Europese Economische Ruimte (EER)</h3>
   <p>Het overgrote deel van uw persoonsgegevens (account, berichten, foto's, agenda, kosten) verwerken en bewaren wij <strong>binnen de EER</strong>, bij Supabase in Frankfurt (Duitsland).</p>
@@ -129,7 +155,7 @@ footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
   <p>Wij werken eraan om deze AI-verwerking in de toekomst naar een Europese aanbieder te verplaatsen, zodat al uw gegevens binnen de EER worden verwerkt.</p>
 
   <h3>6.3 Wettelijke verplichting</h3>
-  <p>In uitzonderlijke gevallen kunnen wij verplicht worden om uw persoonsgegevens te delen op grond van een <strong>wettelijke verplichting</strong> — bijvoorbeeld op verzoek van politie, justitie of een toezichthouder met een geldige juridische grondslag. Wij doen dit alleen voor zover wij daartoe wettelijk gehouden zijn.</p>
+  <p>In uitzonderlijke gevallen kunnen wij verplicht worden om uw persoonsgegevens te delen op grond van een <strong>wettelijke verplichting</strong> â€” bijvoorbeeld op verzoek van politie, justitie of een toezichthouder met een geldige juridische grondslag. Wij doen dit alleen voor zover wij daartoe wettelijk gehouden zijn.</p>
 
   <h2>7. Opslag en beveiliging</h2>
   <p>Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beschermen:</p>
@@ -144,9 +170,9 @@ footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
   <h2>8. AI-verwerking</h2>
   <p>Pauzeapp gebruikt de Anthropic Claude API voor drie functies:</p>
   <ul>
-    <li><strong>Bericht-herschrijving</strong> — uw bericht wordt verzonden naar Anthropic en in drie tonen teruggegeven (Warm, Neutraal, Kort & Warm)</li>
-    <li><strong>Kindblik</strong> — uw vraag wordt verzonden naar Anthropic die het perspectief vanuit uw kind teruggeeft</li>
-    <li><strong>Wat bedoelt mijn co-ouder?</strong> — een bericht van uw co-ouder wordt naar Anthropic verzonden om een neutralere of warmere lezing te bieden</li>
+    <li><strong>Bericht-herschrijving</strong> â€” uw bericht wordt verzonden naar Anthropic en in drie tonen teruggegeven (Warm, Neutraal, Kort & Warm)</li>
+    <li><strong>Kindblik</strong> â€” uw vraag wordt verzonden naar Anthropic die het perspectief vanuit uw kind teruggeeft</li>
+    <li><strong>Wat bedoelt mijn co-ouder?</strong> â€” een bericht van uw co-ouder wordt naar Anthropic verzonden om een neutralere of warmere lezing te bieden</li>
   </ul>
   <p>Deze verwerking vindt plaats op servers van Anthropic in de <strong>Verenigde Staten</strong>, met de EU-Standaardcontractbepalingen als doorgiftewaarborg (zie 6.2). Anthropic gebruikt deze berichten <strong>niet</strong> voor het trainen van hun modellen en slaat ze <strong>niet permanent op</strong>. Meer informatie: <a href="https://www.anthropic.com/privacy" target="_blank">anthropic.com/privacy</a>.</p>
 
@@ -193,10 +219,8 @@ footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
 
   <p>Vragen? Neem contact op via <a href="mailto:info@pauzeapp.nl">info@pauzeapp.nl</a></p>
 </div>
-
 <footer>
-  © 2026 Pauzeapp · <a href="mailto:info@pauzeapp.nl">info@pauzeapp.nl</a> · Haaksbergen, Nederland
+  &copy; 2026 Pauzeapp &middot; <a href="mailto:info@pauzeapp.nl">info@pauzeapp.nl</a> &middot; Haaksbergen, Nederland
 </footer>
-
 </body>
 </html>
