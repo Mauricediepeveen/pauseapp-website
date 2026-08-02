@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inloggen â€” Pauzeapp</title>
+<title>Inloggen — Pauzeapp</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
 
@@ -62,7 +62,7 @@
   <div class="wrap">
     <div class="nav">
       <a href="/" class="logo"><img src="/logo-icon.png" alt="" style="height:2em;vertical-align:-0.55em;margin-right:10px;border-radius:8px;">Pauze<span>app</span></a>
-      <a href="/registreer" style="color: var(--aubergine); font-weight: 600; text-decoration: none;">Account aanmaken â†’</a>
+      <a href="/registreer" style="color: var(--aubergine); font-weight: 600; text-decoration: none;">Account aanmaken →</a>
     </div>
   </div>
 </header>
@@ -82,11 +82,11 @@
       </div>
       <div class="form-group">
         <label for="wachtwoord">WACHTWOORD</label>
-        <input type="password" id="wachtwoord" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+        <input type="password" id="wachtwoord" placeholder="••••••••" required>
         <button type="button" class="toggle-pw" id="toggle-pw">Tonen</button>
       </div>
       <div class="forgot"><a href="#" id="vergeten">Wachtwoord vergeten?</a></div>
-      <button type="submit" class="btn-primary" id="submit-btn">Inloggen â†’</button>
+      <button type="submit" class="btn-primary" id="submit-btn">Inloggen →</button>
     </form>
 
     <p class="alt">Nog geen account? <a href="/registreer">Maak er een aan</a></p>
@@ -94,14 +94,14 @@
 </div>
 
 <footer>
-  <p>Â© 2026 Pauzeapp Â· <a href="/voorwaarden">Voorwaarden</a> Â· <a href="/privacy">Privacy</a></p>
+  <p>© 2026 Pauzeapp · <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a></p>
 </footer>
 
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
   const SUPABASE_URL = 'https://zxlqnofdhyzwnuggtbsa.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // â† Maurice: vervang met echte key
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4bHFub2ZkaHl6d251Z2d0YnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODE0NDksImV4cCI6MjA5MTA1NzQ0OX0.RtkOBLV8oxawDGRfvq-H0iBlDQJN541E_d5q3RlUsag'; // ← Maurice: vervang met echte key
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const form = document.getElementById('login-form');
@@ -149,7 +149,7 @@
         toonError(err.message || 'Er ging iets mis. Probeer het opnieuw.');
       }
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Inloggen â†’';
+      submitBtn.textContent = 'Inloggen →';
     }
   });
 

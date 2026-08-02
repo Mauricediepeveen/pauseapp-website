@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account heractiveren â€” Pauzeapp</title>
+<title>Account heractiveren — Pauzeapp</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap');
 
@@ -68,17 +68,17 @@
 
     <div class="card">
       <div class="melding">
-        <strong>Je account is tijdelijk gepauzeerd.</strong> Er is een betaling niet gelukt. Je gegevens zijn veilig bewaard. Log hieronder in en rond je betaling af â€” daarna is je account direct weer actief.
+        <strong>Je account is tijdelijk gepauzeerd.</strong> Er is een betaling niet gelukt. Je gegevens zijn veilig bewaard. Log hieronder in en rond je betaling af — daarna is je account direct weer actief.
       </div>
 
       <label for="email">E-MAILADRES</label>
       <input type="email" id="email" placeholder="jouw@email.nl" autocomplete="email">
 
       <label for="wachtwoord">WACHTWOORD</label>
-      <input type="password" id="wachtwoord" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" autocomplete="current-password">
+      <input type="password" id="wachtwoord" placeholder="••••••••" autocomplete="current-password">
 
-      <button class="btn-primary" id="betaal-btn">Betaal â‚¬8,99 en heractiveer â†’</button>
-      <div class="prijs-info">Verbonden Â· â‚¬8,99/mnd Â· maandelijks opzegbaar</div>
+      <button class="btn-primary" id="betaal-btn">Betaal €8,99 en heractiveer →</button>
+      <div class="prijs-info">Verbonden · €8,99/mnd · maandelijks opzegbaar</div>
 
       <div class="fout" id="fout-melding"></div>
     </div>
@@ -88,7 +88,7 @@
 
 <footer>
   <div class="wrap">
-    <a href="/voorwaarden">Voorwaarden</a> Â· <a href="/privacy">Privacy</a> Â· Vragen? support@pauzeapp.nl
+    <a href="/voorwaarden">Voorwaarden</a> · <a href="/privacy">Privacy</a> · Vragen? support@pauzeapp.nl
   </div>
 </footer>
 
@@ -159,7 +159,7 @@
     } catch (err) {
       toonFout(err.message || 'Er ging iets mis. Probeer het opnieuw.');
       btn.disabled = false;
-      btn.textContent = 'Betaal â‚¬8,99 en heractiveer â†’';
+      btn.textContent = 'Betaal €8,99 en heractiveer →';
     }
   });
 </script>
