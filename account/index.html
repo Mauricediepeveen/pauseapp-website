@@ -188,7 +188,7 @@
     document.getElementById('info-naam').textContent = gebruiker.naam || '—';
     document.getElementById('info-koppelcode').textContent = gebruiker.koppelcode || '—';
 
-    const pakketNaam = { 'basic': 'Start (gratis)', 'start': 'Start (gratis)', 'verbonden': 'Verbonden — €8,99/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Start';
+    const pakketNaam = { 'basic': 'Gratis', 'start': 'Gratis', 'gratis': 'Gratis', 'verbonden': 'Verbonden — €8,99/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Start';
     document.getElementById('huidig-pakket').textContent = pakketNaam;
 
     // Trial
