@@ -45,6 +45,11 @@
 
   .prijs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
   @media (max-width: 600px) { .prijs-grid { grid-template-columns: 1fr; } }
+  .periode-keuze { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .periode-knop { flex: 1; min-width: 150px; padding: 12px 16px; border: 2px solid #EADBC4; border-radius: 999px; background: #FFFBF3; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600; color: var(--aubergine); transition: all .15s; }
+  .periode-knop:hover { border-color: var(--oranje); }
+  .periode-knop.actief { border-color: var(--oranje); background: rgba(221,104,34,0.08); }
+  .periode-knop .korting { display: block; font-size: 11px; font-weight: 700; color: #A8460F; margin-top: 2px; }
   .prijs-card { padding: 24px; border: 2px solid #EADBC4; border-radius: 16px; background: #FFFBF3; cursor: pointer; transition: border 0.2s, transform 0.15s; }
   .prijs-card:hover { border-color: var(--oranje); transform: translateY(-2px); }
   .prijs-card.actief { border-color: var(--oranje); background: rgba(221,104,34,0.05); }
@@ -108,19 +113,29 @@
       <!-- PAKKETKEUZE -->
       <div class="card" id="upgrade-card">
         <h2>Wijzig je pakket</h2>
-        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 8px;">Kies welk pakket bij jou past. Maandelijks opzegbaar.</p>
+        <p style="color: var(--tekst-zacht); font-size: 14px; margin-bottom: 14px;">Kies welk pakket bij jou past.</p>
+
+        <div class="periode-keuze">
+          <button type="button" class="periode-knop actief" data-periode="maand">Per maand</button>
+          <button type="button" class="periode-knop" data-periode="jaar">Per jaar <span class="korting">2 maanden gratis</span></button>
+        </div>
+
         <div class="prijs-grid">
           <div class="prijs-card" data-pakket="verbonden">
             <h3>Verbonden (stel)</h3>
-            <div class="prijs">€8,99<span> / maand</span></div>
+            <div class="prijs"><span class="bedrag">€8,99</span><span class="per"> / maand</span></div>
             <p class="desc">Voor 2 ouders samen. Alle premium features.</p>
           </div>
-          <div class="prijs-card" data-pakket="solo">
+          <div class="prijs-card" data-pakket="solo_verbonden">
             <h3>Solo Verbonden</h3>
-            <div class="prijs">€4,50<span> / maand</span></div>
+            <div class="prijs"><span class="bedrag">€4,50</span><span class="per"> / maand</span></div>
             <p class="desc">Voor 1 ouder. Alle premium features behalve de gedeelde functies.</p>
           </div>
         </div>
+
+        <p id="periode-uitleg" style="color: var(--tekst-zacht); font-size: 13px; margin-top: 14px;">
+          Maandelijks opzegbaar. De eerste incasso is over een maand.
+        </p>
         <button class="btn-primary" id="koop-btn" disabled>Selecteer eerst een pakket</button>
       </div>
 
@@ -227,18 +242,59 @@
     document.getElementById('content').style.display = 'block';
   })();
 
+  // Prijzen op een plek, zodat scherm en betaling nooit uit elkaar lopen.
+  const PRIJZEN = {
+    verbonden:      { maand: '8,99', jaar: '89,90' },
+    solo_verbonden: { maand: '4,50', jaar: '45,00' },
+  };
+  let gekozenPeriode = 'maand';
+
+  function tekenPrijzen() {
+    document.querySelectorAll('.prijs-card').forEach(card => {
+      const p = PRIJZEN[card.dataset.pakket];
+      if (!p) return;
+      card.querySelector('.bedrag').textContent = '€' + p[gekozenPeriode];
+      card.querySelector('.per').textContent = gekozenPeriode === 'jaar' ? ' / jaar' : ' / maand';
+    });
+    document.getElementById('periode-uitleg').textContent = gekozenPeriode === 'jaar'
+      ? 'Je betaalt nu voor een heel jaar. Daarna loopt het door als maandabonnement, dat je elke maand kunt opzeggen. Het verlengt niet stilzwijgend met nog een jaar.'
+      : 'Maandelijks opzegbaar. De eerste incasso is over een maand.';
+    tekenKoopknop();
+  }
+
+  function tekenKoopknop() {
+    const koopBtn = document.getElementById('koop-btn');
+    if (!gekozenPakket) {
+      koopBtn.textContent = 'Selecteer eerst een pakket';
+      koopBtn.disabled = true;
+      return;
+    }
+    const p = PRIJZEN[gekozenPakket];
+    koopBtn.textContent = `Aankopen voor €${p[gekozenPeriode]} ${gekozenPeriode === 'jaar' ? 'per jaar' : 'per maand'} →`;
+    koopBtn.disabled = false;
+  }
+
+  // Maand of jaar
+  document.querySelectorAll('.periode-knop').forEach(knop => {
+    knop.addEventListener('click', () => {
+      document.querySelectorAll('.periode-knop').forEach(k => k.classList.remove('actief'));
+      knop.classList.add('actief');
+      gekozenPeriode = knop.dataset.periode;
+      tekenPrijzen();
+    });
+  });
+
   // Pakket selecteren
   document.querySelectorAll('.prijs-card').forEach(card => {
     card.addEventListener('click', () => {
       document.querySelectorAll('.prijs-card').forEach(c => c.classList.remove('actief'));
       card.classList.add('actief');
       gekozenPakket = card.dataset.pakket;
-      const koopBtn = document.getElementById('koop-btn');
-      const prijsTekst = gekozenPakket === 'verbonden' ? '€8,99/mnd' : '€4,50/mnd';
-      koopBtn.textContent = `Aankopen voor ${prijsTekst} →`;
-      koopBtn.disabled = false;
+      tekenKoopknop();
     });
   });
+
+  tekenPrijzen();
 
   // Koop-knop: roept Mollie Edge Function aan
   document.getElementById('koop-btn').addEventListener('click', async () => {
@@ -258,7 +314,7 @@
         body: JSON.stringify({
           userId: userId,
           pakket: gekozenPakket,
-          bedrag: gekozenPakket === 'verbonden' ? '8.99' : '4.50',
+          periode: gekozenPeriode,
           redirectUrl: window.location.origin + '/betaling-voltooid',
         }),
       });
