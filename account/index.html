@@ -63,27 +63,34 @@
   .prijs-card .desc { font-size: 13px; color: var(--tekst-zacht); }
 
 
-  /* Eigen dialoogvenster. De browser tekent alert() en confirm() zelf, en
-     dat past niet bij de rest -- juist op het moment dat iemand opzegt of
-     iets misgaat, hoort het vertrouwd te blijven aanvoelen. */
-  .dialoog-waas { position: fixed; inset: 0; background: rgba(76,13,48,0.45);
-    display: flex; align-items: center; justify-content: center; padding: 24px;
+  /* Eigen dialoogvenster, in dezelfde opmaak als de automatische mails:
+     een aubergine balk met het beeldmerk, en de inhoud op crème. Een witte
+     doos met een grijze waas is netjes maar zegt niets -- je herkent er niet
+     aan dat je bij Pauzeapp bent, juist op het moment dat het spannend is. */
+  .dialoog-waas { position: fixed; inset: 0; background: rgba(30,5,18,0.58);
+    display: flex; align-items: center; justify-content: center; padding: 22px;
     z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.18s; }
   .dialoog-waas.open { opacity: 1; pointer-events: auto; }
-  .dialoog { background: #fff; border-radius: 22px; padding: 30px 28px 24px;
-    max-width: 420px; width: 100%; box-shadow: 0 18px 50px rgba(76,13,48,0.22);
-    transform: translateY(10px); transition: transform 0.18s; }
+  .dialoog { background: #FFFBF3; border-radius: 22px; overflow: hidden;
+    max-width: 430px; width: 100%; box-shadow: 0 20px 60px rgba(30,5,18,0.35);
+    transform: translateY(12px); transition: transform 0.18s; }
   .dialoog-waas.open .dialoog { transform: translateY(0); }
-  .dialoog h3 { font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.25;
-    color: var(--aubergine); margin: 0 0 10px; }
-  .dialoog p { font-size: 15px; color: var(--tekst-donker); margin: 0; white-space: pre-line; }
+  .dialoog-kop { background: var(--aubergine); padding: 20px 24px;
+    display: flex; align-items: center; gap: 13px; }
+  .dialoog-kop img { width: 34px; height: 34px; border-radius: 50%; display: block; flex: none; }
+  .dialoog-kop h3 { font-family: 'Fraunces', serif; font-size: 21px; line-height: 1.2;
+    color: var(--zand); margin: 0; font-weight: 600; }
+  .dialoog-lijf { padding: 22px 24px 20px; }
+  .dialoog-lijf p { font-size: 15.5px; line-height: 1.6; color: var(--tekst-donker);
+    margin: 0; white-space: pre-line; }
   .dialoog-knoppen { display: flex; gap: 10px; justify-content: flex-end;
-    margin-top: 24px; flex-wrap: wrap; }
+    margin-top: 22px; flex-wrap: wrap; }
   .dialoog-knoppen button { padding: 13px 26px; border-radius: 999px;
     font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; border: none; }
-  .dialoog-ja { background: var(--oranje); color: #fff; }
+  .dialoog-ja { background: var(--oranje); color: #fff;
+    box-shadow: 0 8px 20px rgba(221,104,34,0.28); }
   .dialoog-nee { background: transparent; color: var(--aubergine);
-    border: 2px solid rgba(76,13,48,0.25); font-weight: 600; }
+    border: 2px solid rgba(76,13,48,0.22); font-weight: 600; }
   .btn-primary { background: var(--oranje); color: white; padding: 16px 34px; border-radius: 999px; border: none; font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; transition: transform 0.15s, opacity 0.2s; margin-top: 16px; }
   .btn-primary:hover { transform: translateY(-1px); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -479,11 +486,16 @@
 
 <div class="dialoog-waas" id="dialoog-waas" role="dialog" aria-modal="true" aria-labelledby="dialoog-kop">
   <div class="dialoog">
-    <h3 id="dialoog-kop"></h3>
-    <p id="dialoog-tekst"></p>
-    <div class="dialoog-knoppen">
-      <button class="dialoog-nee" id="dialoog-nee">Annuleren</button>
-      <button class="dialoog-ja"  id="dialoog-ja">OK</button>
+    <div class="dialoog-kop">
+      <img src="/logo-icon.png" alt="">
+      <h3 id="dialoog-kop">&nbsp;</h3>
+    </div>
+    <div class="dialoog-lijf">
+      <p id="dialoog-tekst"></p>
+      <div class="dialoog-knoppen">
+        <button class="dialoog-nee" id="dialoog-nee">Annuleren</button>
+        <button class="dialoog-ja"  id="dialoog-ja">OK</button>
+      </div>
     </div>
   </div>
 </div>
