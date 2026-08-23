@@ -205,7 +205,9 @@
     document.getElementById('info-naam').textContent = gebruiker.naam || '—';
     document.getElementById('info-koppelcode').textContent = gebruiker.koppelcode || '—';
 
-    const pakketNaam = { 'basic': 'Gratis', 'start': 'Gratis', 'gratis': 'Gratis', 'verbonden': 'Verbonden — €8,99/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Start';
+    // De database schrijft 'solo_verbonden'; alleen 'solo' stond hier, waardoor
+    // een Solo-klant zijn eigen pakket niet terugzag.
+    const pakketNaam = { 'basic': 'Gratis', 'start': 'Gratis', 'gratis': 'Gratis', 'verbonden': 'Verbonden — €8,99/mnd', 'solo_verbonden': 'Solo Verbonden — €4,50/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Gratis';
     document.getElementById('huidig-pakket').textContent = pakketNaam;
 
     // Trial
@@ -363,18 +365,42 @@
   });
 
   // Opzeggen
+  // Dit moet langs Mollie. Zet je hier alleen het pakket in de database om,
+  // dan blijft de incasso elke maand doorlopen terwijl de toegang al weg is.
+  // De edge-functie zegt het abonnement bij Mollie op en maakt
+  // mollie_subscription_id leeg; auto-downgrade zet het pakket daarna terug
+  // op gratis zodra de betaalde periode voorbij is.
   document.getElementById('opzeg-btn').addEventListener('click', async () => {
-    if (!confirm('Weet je zeker dat je het abonnement wilt opzeggen? Je houdt toegang tot het einde van de huidige periode.')) return;
+    const btn = document.getElementById('opzeg-btn');
+    if (btn.disabled) return;
+    if (!confirm('Weet je zeker dat je het abonnement wilt opzeggen? Er wordt niets meer afgeschreven. Je houdt toegang tot het einde van de periode die je al betaald hebt.')) return;
+    btn.disabled = true;
+    const oudeTekst = btn.textContent;
+    btn.textContent = 'Bezig met opzeggen...';
     try {
-      const { error } = await supabase
-        .from('gebruikers')
-        .update({ pakket: 'basic' /* of mark voor opzeg-flow */ })
-        .eq('id', userId);
-      if (error) throw error;
-      alert('Abonnement opgezegd. Je houdt toegang tot het einde van de huidige periode.');
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/cancel-subscription`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Opzeggen is niet gelukt');
+
+      const tot = data.actiefTot
+        ? new Date(data.actiefTot).toLocaleDateString('nl-NL',
+            { day: 'numeric', month: 'long', year: 'numeric' })
+        : null;
+      alert(tot
+        ? `Je abonnement is opgezegd. Er wordt niets meer afgeschreven. Je houdt toegang tot ${tot}.`
+        : 'Je abonnement is opgezegd. Er wordt niets meer afgeschreven.');
       location.reload();
     } catch (err) {
-      alert('Er ging iets mis: ' + err.message);
+      alert('Het opzeggen is niet gelukt: ' + err.message + '\n\nEr is nog niets veranderd aan je abonnement. Mail info@pauzeapp.nl, dan zetten wij het stop.');
+      btn.disabled = false;
+      btn.textContent = oudeTekst;
     }
   });
 
