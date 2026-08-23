@@ -306,7 +306,9 @@
     // Opzeggen alleen tonen bij betaald pakket.
     // 'solo_verbonden' is wat de database schrijft. Stond die er niet bij,
     // dan zag een Solo-klant zijn opzegknop helemaal niet.
-    if (heeftBetaald) {
+    // Alleen tonen als er ook echt iets te stoppen valt. Wie al opgezegd
+    // heeft, hoeft geen knop te zien die niets meer doet.
+    if (heeftBetaald && gebruiker.mollie_subscription_id) {
       document.getElementById('opzeg-card').style.display = 'block';
     }
 
@@ -466,6 +468,13 @@
         ? new Date(data.actiefTot).toLocaleDateString('nl-NL',
             { day: 'numeric', month: 'long', year: 'numeric' })
         : null;
+      if (data.alGestopt) {
+        await meld('Er loopt geen abonnement meer', tot
+          ? `Je had al opgezegd. Er wordt niets afgeschreven, en je houdt toegang tot ${tot}.`
+          : 'Je had al opgezegd. Er wordt niets afgeschreven.');
+        location.reload();
+        return;
+      }
       await meld('Je abonnement is opgezegd', tot
         ? `Er wordt niets meer afgeschreven. Je houdt toegang tot ${tot}.\n\nJe krijgt hier ook een mail over.`
         : 'Er wordt niets meer afgeschreven.\n\nJe krijgt hier ook een mail over.');
