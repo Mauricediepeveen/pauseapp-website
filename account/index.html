@@ -260,6 +260,29 @@
       document.getElementById('pakket-info').textContent = gebruiker.mollie_subscription_id
         ? `Volgende incasso: ${datum}`
         : `Opgezegd — toegang tot ${datum}`;
+
+      // En dan hetzelfde nog eens, maar dan zoals Mollie het werkelijk gaat
+      // uitvoeren. Bij een jaarabonnement scheelt dat: je betaalde 89,90,
+      // en over twaalf maanden begint een maandabonnement van 8,99. Dat kun
+      // je niet uit onze eigen database afleiden.
+      if (gebruiker.mollie_subscription_id) {
+        try {
+          const res = await fetch(`${SUPABASE_URL}/functions/v1/abonnement-info`, {
+            headers: { 'Authorization': `Bearer ${session.access_token}` },
+          });
+          const abo = await res.json();
+          if (abo?.actief && abo.bedrag && abo.volgendeIncasso) {
+            const dag = new Date(abo.volgendeIncasso).toLocaleDateString('nl-NL',
+              { day: 'numeric', month: 'long', year: 'numeric' });
+            const bedrag = Number(abo.bedrag).toFixed(2).replace('.', ',');
+            document.getElementById('pakket-info').textContent =
+              `Volgende incasso: €${bedrag} op ${dag}`;
+          }
+        } catch (e) {
+          // Lukt het niet, dan blijft de datum uit onze eigen database staan.
+          console.warn('Abonnement bij Mollie ophalen mislukt:', e);
+        }
+      }
     }
 
     // Add-on
