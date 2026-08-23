@@ -186,9 +186,12 @@
     .nav-links a.muted{display:none}
     .nav-links a[href="#prijzen"],
     .nav-links a[href="login/"]{display:inline; color:var(--aubergine); font-weight:600}
-    .nav-links{gap:16px; font-size:15px}
-    nav{padding:0 18px}
-    .btn{padding:12px 18px; font-size:15px}
+    /* Het woord Pauzeapp gaat weg, het beeldmerk blijft. Anders past
+       'Start gratis' niet meer op een scherm van 375 pixels. */
+    .logo-woord{display:none}
+    .nav-links{gap:15px; font-size:15px}
+    nav{padding:0 16px; height:66px}
+    .btn{padding:11px 17px; font-size:15px}
     .cijfer-grid,.steps,.feat-grid,.price-grid,.pillar-grid{grid-template-columns:1fr}
     .pro .wrap,.pillars .wrap{padding:38px 26px}
     section{padding:60px 0}
@@ -200,7 +203,7 @@
 
 <header>
   <nav>
-    <a href="/" class="logo"><img src="/logo-icon.png" alt="" style="height:2em;border-radius:8px;">Pauzeapp</a>
+    <a href="/" class="logo"><img src="/logo-icon.png" alt="Pauzeapp" style="height:2em;border-radius:8px;"><span class="logo-woord">Pauzeapp</span></a>
     <div class="nav-links">
       <a href="#hoe" class="muted">Hoe het werkt</a>
       <a href="#prijzen" class="muted">Prijzen</a>
@@ -428,7 +431,7 @@
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <a href="/" class="logo"><img src="/logo-icon.png" alt="" style="height:2em;border-radius:8px;">Pauzeapp</a>
+        <a href="/" class="logo"><img src="/logo-icon.png" alt="Pauzeapp" style="height:2em;border-radius:8px;"><span class="logo-woord">Pauzeapp</span></a>
         <p>Voor rust in de communicatie. Voor de kinderen. Gebouwd vanuit eigen ervaring met co-ouderschap.</p>
       </div>
       <div class="foot-cols">
