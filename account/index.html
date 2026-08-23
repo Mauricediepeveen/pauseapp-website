@@ -51,7 +51,11 @@
   .periode-knop.actief { border-color: var(--oranje); background: rgba(221,104,34,0.08); }
   .periode-knop .korting { display: block; font-size: 11px; font-weight: 700; color: #A8460F; margin-top: 2px; }
   .prijs-card { padding: 24px; border: 2px solid #EADBC4; border-radius: 16px; background: #FFFBF3; cursor: pointer; transition: border 0.2s, transform 0.15s; }
-  .prijs-card:hover { border-color: var(--oranje); transform: translateY(-2px); }
+  /* Alleen op muisapparaten. Op een telefoon blijft :hover na een tik
+     hangen, en dan lijkt een kaart gekozen terwijl dat niet zo is. */
+  @media (hover: hover) {
+    .prijs-card:hover { border-color: var(--oranje); transform: translateY(-2px); }
+  }
   .prijs-card.actief { border-color: var(--oranje); background: rgba(221,104,34,0.05); }
   .prijs-card h3 { font-size: 18px; color: var(--aubergine); margin-bottom: 4px; }
   .prijs-card .prijs { font-family: 'Fraunces', serif; font-size: 28px; color: var(--aubergine); margin: 8px 0; }
@@ -210,8 +214,15 @@
     const pakketNaam = { 'basic': 'Gratis', 'start': 'Gratis', 'gratis': 'Gratis', 'verbonden': 'Verbonden — €8,99/mnd', 'solo_verbonden': 'Solo Verbonden — €4,50/mnd', 'solo': 'Solo Verbonden — €4,50/mnd', 'pro': 'Pro', 'premium': 'Premium' }[gebruiker.pakket] || 'Gratis';
     document.getElementById('huidig-pakket').textContent = pakketNaam;
 
+    // Wie betaald heeft, is klaar met de proefperiode -- ook al lopen er op
+    // papier nog dagen. Bleef de trial-tekst staan, dan las een klant die
+    // net had afgerekend dat zijn toegang binnenkort zou stoppen tenzij hij
+    // een pakket koos. Dat had hij net gedaan.
+    const BETAALDE_PAKKETTEN = ['verbonden', 'solo_verbonden', 'solo', 'pro', 'premium'];
+    const heeftBetaald = BETAALDE_PAKKETTEN.includes(gebruiker.pakket);
+
     // Trial
-    if (gebruiker.trial_actief && gebruiker.trial_eind) {
+    if (!heeftBetaald && gebruiker.trial_actief && gebruiker.trial_eind) {
       const trialEind = new Date(gebruiker.trial_eind);
       const dagenOver = Math.ceil((trialEind - new Date()) / (1000 * 60 * 60 * 24));
       if (dagenOver > 0) {
@@ -240,10 +251,10 @@
       }
     }
 
-    // Opzeggen alleen tonen bij betaald pakket
+    // Opzeggen alleen tonen bij betaald pakket.
     // 'solo_verbonden' is wat de database schrijft. Stond die er niet bij,
     // dan zag een Solo-klant zijn opzegknop helemaal niet.
-    if (['verbonden', 'solo_verbonden', 'solo', 'pro', 'premium'].includes(gebruiker.pakket)) {
+    if (heeftBetaald) {
       document.getElementById('opzeg-card').style.display = 'block';
     }
 
