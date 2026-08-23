@@ -62,6 +62,28 @@
   .prijs-card .prijs span { font-size: 14px; color: var(--tekst-zacht); }
   .prijs-card .desc { font-size: 13px; color: var(--tekst-zacht); }
 
+
+  /* Eigen dialoogvenster. De browser tekent alert() en confirm() zelf, en
+     dat past niet bij de rest -- juist op het moment dat iemand opzegt of
+     iets misgaat, hoort het vertrouwd te blijven aanvoelen. */
+  .dialoog-waas { position: fixed; inset: 0; background: rgba(76,13,48,0.45);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.18s; }
+  .dialoog-waas.open { opacity: 1; pointer-events: auto; }
+  .dialoog { background: #fff; border-radius: 22px; padding: 30px 28px 24px;
+    max-width: 420px; width: 100%; box-shadow: 0 18px 50px rgba(76,13,48,0.22);
+    transform: translateY(10px); transition: transform 0.18s; }
+  .dialoog-waas.open .dialoog { transform: translateY(0); }
+  .dialoog h3 { font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.25;
+    color: var(--aubergine); margin: 0 0 10px; }
+  .dialoog p { font-size: 15px; color: var(--tekst-donker); margin: 0; white-space: pre-line; }
+  .dialoog-knoppen { display: flex; gap: 10px; justify-content: flex-end;
+    margin-top: 24px; flex-wrap: wrap; }
+  .dialoog-knoppen button { padding: 13px 26px; border-radius: 999px;
+    font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; border: none; }
+  .dialoog-ja { background: var(--oranje); color: #fff; }
+  .dialoog-nee { background: transparent; color: var(--aubergine);
+    border: 2px solid rgba(76,13,48,0.25); font-weight: 600; }
   .btn-primary { background: var(--oranje); color: white; padding: 16px 34px; border-radius: 999px; border: none; font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; transition: transform 0.15s, opacity 0.2s; margin-top: 16px; }
   .btn-primary:hover { transform: translateY(-1px); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -345,7 +367,7 @@
         throw new Error(data.error || 'Geen checkout-URL ontvangen');
       }
     } catch (err) {
-      alert('Er ging iets mis bij het starten van de betaling: ' + err.message);
+      await meld('Even niet gelukt', 'Het starten van de betaling ging mis.\n\n' + err.message + '\n\nEr is nog niets afgeschreven. Probeer het zo nog eens, of mail info@pauzeapp.nl.');
       btn.disabled = false;
       btn.textContent = `Aankopen →`;
     }
@@ -376,7 +398,7 @@
       if (data.checkoutUrl) { window.location.href = data.checkoutUrl; }
       else { throw new Error(data.error || 'Geen checkout-URL'); }
     } catch (err) {
-      alert('Er ging iets mis: ' + err.message);
+      await meld('Even niet gelukt', 'Het starten van de betaling ging mis.\n\n' + err.message + '\n\nEr is nog niets afgeschreven. Probeer het zo nog eens, of mail info@pauzeapp.nl.');
       btn.disabled = false;
       btn.textContent = 'Aanschaffen';
     }
@@ -391,7 +413,10 @@
   document.getElementById('opzeg-btn').addEventListener('click', async () => {
     const btn = document.getElementById('opzeg-btn');
     if (btn.disabled) return;
-    if (!confirm('Weet je zeker dat je het abonnement wilt opzeggen? Er wordt niets meer afgeschreven. Je houdt toegang tot het einde van de periode die je al betaald hebt.')) return;
+    const zeker = await vraag('Abonnement opzeggen?',
+      'Er wordt niets meer afgeschreven. Je houdt toegang tot het einde van de periode die je al betaald hebt, en al je gegevens blijven staan.',
+      'Ja, opzeggen', 'Nee, laat maar');
+    if (!zeker) return;
     btn.disabled = true;
     const oudeTekst = btn.textContent;
     btn.textContent = 'Bezig met opzeggen...';
@@ -411,12 +436,12 @@
         ? new Date(data.actiefTot).toLocaleDateString('nl-NL',
             { day: 'numeric', month: 'long', year: 'numeric' })
         : null;
-      alert(tot
-        ? `Je abonnement is opgezegd. Er wordt niets meer afgeschreven. Je houdt toegang tot ${tot}.`
-        : 'Je abonnement is opgezegd. Er wordt niets meer afgeschreven.');
+      await meld('Je abonnement is opgezegd', tot
+        ? `Er wordt niets meer afgeschreven. Je houdt toegang tot ${tot}.\n\nJe krijgt hier ook een mail over.`
+        : 'Er wordt niets meer afgeschreven.\n\nJe krijgt hier ook een mail over.');
       location.reload();
     } catch (err) {
-      alert('Het opzeggen is niet gelukt: ' + err.message + '\n\nEr is nog niets veranderd aan je abonnement. Mail info@pauzeapp.nl, dan zetten wij het stop.');
+      await meld('Het opzeggen is niet gelukt', err.message + '\n\nEr is nog niets veranderd aan je abonnement. Mail info@pauzeapp.nl, dan zetten wij het voor je stop.');
       btn.disabled = false;
       btn.textContent = oudeTekst;
     }
@@ -427,6 +452,54 @@
     await supabase.auth.signOut();
     window.location.href = '/login';
   });
+</script>
+
+<div class="dialoog-waas" id="dialoog-waas" role="dialog" aria-modal="true" aria-labelledby="dialoog-kop">
+  <div class="dialoog">
+    <h3 id="dialoog-kop"></h3>
+    <p id="dialoog-tekst"></p>
+    <div class="dialoog-knoppen">
+      <button class="dialoog-nee" id="dialoog-nee">Annuleren</button>
+      <button class="dialoog-ja"  id="dialoog-ja">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Vervangt alert() en confirm(). Geeft een belofte terug: true bij OK,
+  // false bij annuleren of Escape.
+  const _waas = document.getElementById('dialoog-waas');
+  let _sluit = null;
+
+  function _toon({ kop, tekst, jaTekst = 'OK', neeTekst = null }) {
+    document.getElementById('dialoog-kop').textContent = kop;
+    document.getElementById('dialoog-tekst').textContent = tekst;
+    const ja = document.getElementById('dialoog-ja');
+    const nee = document.getElementById('dialoog-nee');
+    ja.textContent = jaTekst;
+    nee.textContent = neeTekst || '';
+    nee.style.display = neeTekst ? '' : 'none';
+    _waas.classList.add('open');
+    ja.focus();
+    return new Promise(klaar => {
+      _sluit = (antwoord) => {
+        _waas.classList.remove('open');
+        _sluit = null;
+        klaar(antwoord);
+      };
+    });
+  }
+
+  document.getElementById('dialoog-ja').addEventListener('click', () => _sluit && _sluit(true));
+  document.getElementById('dialoog-nee').addEventListener('click', () => _sluit && _sluit(false));
+  _waas.addEventListener('click', e => { if (e.target === _waas && _sluit) _sluit(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && _sluit) _sluit(false); });
+
+  // Alleen melden.
+  window.meld = (kop, tekst) => _toon({ kop, tekst });
+  // Vragen om bevestiging.
+  window.vraag = (kop, tekst, jaTekst = 'Ja', neeTekst = 'Annuleren') =>
+    _toon({ kop, tekst, jaTekst, neeTekst });
 </script>
 
 </body>
