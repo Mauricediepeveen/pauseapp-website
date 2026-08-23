@@ -179,7 +179,16 @@
   }
   @media(max-width:620px){
     body{font-size:17px}
+    /* Op een telefoon verdwenen alle menu-links, ook Prijzen en Inloggen.
+       Er bleef alleen 'Start gratis' over: wie wilde betalen moest langs de
+       hele pagina scrollen, en wie al klant was kon nergens inloggen.
+       Die twee blijven nu staan, de rest gaat weg. */
     .nav-links a.muted{display:none}
+    .nav-links a[href="#prijzen"],
+    .nav-links a[href="login/"]{display:inline; color:var(--aubergine); font-weight:600}
+    .nav-links{gap:16px; font-size:15px}
+    nav{padding:0 18px}
+    .btn{padding:12px 18px; font-size:15px}
     .cijfer-grid,.steps,.feat-grid,.price-grid,.pillar-grid{grid-template-columns:1fr}
     .pro .wrap,.pillars .wrap{padding:38px 26px}
     section{padding:60px 0}
