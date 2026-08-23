@@ -220,8 +220,13 @@
         document.getElementById('pakket-info').textContent = `Trial: nog ${dagenOver} dag${dagenOver !== 1 ? 'en' : ''}`;
       }
     } else if (gebruiker.subscription_eind) {
+      // Is er opgezegd, dan komt er geen incasso meer. Dat hier toch zo
+      // noemen leest als een aanstaande afschrijving die er niet is.
       const eind = new Date(gebruiker.subscription_eind);
-      document.getElementById('pakket-info').textContent = `Volgende incasso: ${eind.toLocaleDateString('nl-NL')}`;
+      const datum = eind.toLocaleDateString('nl-NL');
+      document.getElementById('pakket-info').textContent = gebruiker.mollie_subscription_id
+        ? `Volgende incasso: ${datum}`
+        : `Opgezegd — toegang tot ${datum}`;
     }
 
     // Add-on
@@ -236,7 +241,9 @@
     }
 
     // Opzeggen alleen tonen bij betaald pakket
-    if (['verbonden', 'solo', 'pro', 'premium'].includes(gebruiker.pakket)) {
+    // 'solo_verbonden' is wat de database schrijft. Stond die er niet bij,
+    // dan zag een Solo-klant zijn opzegknop helemaal niet.
+    if (['verbonden', 'solo_verbonden', 'solo', 'pro', 'premium'].includes(gebruiker.pakket)) {
       document.getElementById('opzeg-card').style.display = 'block';
     }
 
