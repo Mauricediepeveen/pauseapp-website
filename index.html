@@ -237,9 +237,6 @@
            scherm niet. Daar hoort een knop, die via /download/ meteen naar
            de juiste winkel gaat. -->
       <a class="btn btn-primary hero-download" href="download/" id="hero-download">Download de app</a>
-      <!-- Een account maak je gewoon in de app. Wat daar niet kan, is een
-           abonnement afsluiten of wijzigen: dat gaat hier, op de site. -->
-      <p class="hero-note hero-download-note">Een account maak je in de app. Een abonnement regel je hier op de site.</p>
       <script>
         // Op Android rechtstreeks naar de Play Store, zonder tussenpagina.
         // Op iPhone blijft /download/ staan tot de App Store-link er is.
@@ -248,8 +245,7 @@
       </script>
       <style>
         .hero-download{display:inline-block;margin-top:16px}
-        .hero-download-note{margin-top:10px}
-        @media (min-width:900px){.hero-download,.hero-download-note{display:none}}
+        @media (min-width:900px){.hero-download{display:none}}
         .hero-qr{display:none;align-items:center;gap:14px;margin-top:22px;text-decoration:none;color:inherit}
         .hero-qr img{border-radius:12px;border:1px solid rgba(76,13,48,.14)}
         .hero-qr span{font-size:13px;line-height:1.35;opacity:.75}
