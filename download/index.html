@@ -31,7 +31,9 @@
   header{padding:22px 24px}
   header a{color:var(--aub);text-decoration:none;font:600 20px Fraunces,serif}
   main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
-  .kaart{background:#fff;border:1px solid rgba(76,13,48,.14);border-radius:28px;padding:36px 32px;max-width:560px;width:100%;text-align:center}
+  main{min-width:0}
+  .kaart{background:#fff;border:1px solid rgba(76,13,48,.14);border-radius:28px;padding:36px 32px;max-width:560px;width:100%;min-width:0;text-align:center;overflow-wrap:anywhere}
+  @media (max-width:420px){.kaart{padding:28px 20px} h1{font-size:27px}}
   .eyebrow{font-size:12px;letter-spacing:3px;color:var(--terra);font-weight:700;margin:0 0 10px}
   h1{font:700 34px/1.15 Fraunces,serif;margin:0 0 10px}
   p{margin:0 0 22px;color:var(--gm)}
