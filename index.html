@@ -233,7 +233,13 @@
         <img src="download/qr-pauzeapp.png" width="96" height="96" alt="QR-code om Pauzeapp te downloaden">
         <span>Scan om de app<br>te downloaden</span>
       </a>
+      <!-- Op een telefoon is een QR-code niets waard: je scant je eigen
+           scherm niet. Daar hoort een knop, die via /download/ meteen naar
+           de juiste winkel gaat. -->
+      <a class="hero-download" href="download/">Download de app →</a>
       <style>
+        .hero-download{display:inline-block;margin-top:18px;font-weight:700;color:inherit;text-decoration:underline;text-underline-offset:4px}
+        @media (min-width:900px){.hero-download{display:none}}
         .hero-qr{display:none;align-items:center;gap:14px;margin-top:22px;text-decoration:none;color:inherit}
         .hero-qr img{border-radius:12px;border:1px solid rgba(76,13,48,.14)}
         .hero-qr span{font-size:13px;line-height:1.35;opacity:.75}
