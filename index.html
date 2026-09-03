@@ -64,11 +64,9 @@
   .hero p.lead{margin-top:24px;font-size:20px;color:rgba(240,240,240,.86);max-width:540px}
   .hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
   .hero-note{margin-top:20px;font-size:15px;color:rgba(240,240,240,.62)}
-  .pausecard{justify-self:center;width:100%;max-width:340px;aspect-ratio:1;border-radius:38px;background:linear-gradient(160deg,rgba(101,22,65,.9),rgba(76,13,48,.4));border:1px solid rgba(221,104,34,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;box-shadow:0 30px 60px rgba(0,0,0,.3)}
-  .pauseglyph{width:108px;height:108px;border-radius:50%;background:rgba(221,104,34,.14);display:flex;align-items:center;justify-content:center;animation:breathe 4.5s ease-in-out infinite}
-  .pauseglyph::before,.pauseglyph::after{content:"";width:13px;height:46px;border-radius:7px;background:var(--accent);margin:0 6px}
-  @keyframes breathe{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(221,104,34,.18)}50%{transform:scale(1.07);box-shadow:0 0 0 22px rgba(221,104,34,0)}}
-  .pausecard span{font-family:'Fraunces',serif;font-style:italic;font-size:19px;color:rgba(240,240,240,.78);text-align:center;padding:0 24px}
+  .hero-phone{display:flex;justify-content:center;align-items:center}
+  .hero-phone img{width:min(100%,330px);height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.45));transform:rotate(-2deg)}
+  @media (max-width:900px){.hero-phone img{width:min(72%,260px);transform:none}}
 
   /* SECTION SHELL */
   section{padding:88px 0}
@@ -187,7 +185,6 @@
 
   @media(max-width:920px){
     .hero .wrap{grid-template-columns:1fr;gap:44px}
-    .pausecard{max-width:300px}
     .cijfer-grid,.steps,.feat-grid,.price-grid,.pillar-grid{grid-template-columns:1fr 1fr}
     .verhaal .wrap,.pro .wrap{grid-template-columns:1fr}
     .verhaal img{margin:0 auto}
@@ -267,9 +264,12 @@
         @media (min-width:900px){.hero-qr{display:inline-flex}}
       </style>
     </div>
-    <div class="pausecard">
-      <div class="pauseglyph"></div>
-      <span>Even pauze. Dan pas verzenden.</span>
+    <!-- Geen tekening van een pauzeteken meer, maar de app zelf: het
+         scherm met de drie herschreven versies. Dat is het product. Wie dit
+         ziet, snapt in één blik wat drie alinea's tekst niet lukt. -->
+    <div class="hero-phone">
+      <img src="hero-telefoon.png" width="656" height="1360"
+           alt="Pauzeapp: drie rustigere versies van je bericht, jij kiest welke er weggaat">
     </div>
   </div>
 </section>
