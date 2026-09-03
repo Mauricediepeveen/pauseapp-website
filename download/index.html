@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Download Pauzeapp</title>
+<link rel="icon" type="image/png" href="/logo-icon.png">
+<link rel="apple-touch-icon" href="/logo-icon.png">
+<meta name="description" content="Download Pauzeapp voor Android of iPhone." />
+<script>
+  // Eén QR-code, één adres. Deze pagina stuurt iemand op een telefoon
+  // meteen door naar de winkel die bij zijn toestel hoort. Op een computer
+  // laat hij de QR-code en de knoppen zien.
+  //
+  // De iPhone-versie ligt bij Apple ter beoordeling. Zodra hij in de App
+  // Store staat: onderstaande regel invullen, en elke geprinte code werkt
+  // vanzelf ook voor iPhone. Niets opnieuw drukken.
+  var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.mauricediepeveen.pauzeapp";
+  var IOS_URL     = "";   // straks: "https://apps.apple.com/app/id6804631695"
+  var ua = navigator.userAgent || "";
+  if (/android/i.test(ua)) { location.replace(ANDROID_URL); }
+  else if (/iphone|ipad|ipod/i.test(ua) && IOS_URL) { location.replace(IOS_URL); }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--zand:#FFF1DE;--aub:#4C0D30;--terra:#DD6822;--diep:#8F380A;--kaart:#EAC491;--gm:rgba(76,13,48,.72)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--zand);color:var(--aub);font:17px/1.55 Figtree,system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+  header{padding:22px 24px}
+  header a{color:var(--aub);text-decoration:none;font:600 20px Fraunces,serif}
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
+  .kaart{background:#fff;border:1px solid rgba(76,13,48,.14);border-radius:28px;padding:36px 32px;max-width:560px;width:100%;text-align:center}
+  .eyebrow{font-size:12px;letter-spacing:3px;color:var(--terra);font-weight:700;margin:0 0 10px}
+  h1{font:700 34px/1.15 Fraunces,serif;margin:0 0 10px}
+  p{margin:0 0 22px;color:var(--gm)}
+  .qr{width:220px;height:220px;border-radius:18px;margin:0 auto 22px;display:block}
+  .knoppen{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;padding:14px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:16px}
+  .btn-primary{background:var(--terra);color:var(--aub)}
+  .btn-uit{background:var(--kaart);color:var(--gm);cursor:default}
+  .klein{font-size:13px;margin-top:18px}
+  .ios-note{display:none}
+  @media (max-width:520px){.qr{display:none}}
+</style>
+</head>
+<body>
+<header><a href="/">Pauzeapp</a></header>
+<main>
+  <div class="kaart">
+    <p class="eyebrow">DOWNLOAD</p>
+    <h1>Pauzeapp op je telefoon</h1>
+    <p>Scan de code met je telefoon, of kies je winkel.</p>
+    <img class="qr" src="/download/qr-pauzeapp.png" alt="QR-code naar pauzeapp.nl/download" width="220" height="220">
+    <div class="knoppen">
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.mauricediepeveen.pauzeapp">Android · Play Store</a>
+      <span class="btn btn-uit" id="ios-knop">iPhone · binnenkort</span>
+    </div>
+    <p class="klein" id="ios-tekst">De iPhone-versie ligt bij Apple ter beoordeling. Zodra hij er is, werkt deze code ook daarvoor.</p>
+    <p class="klein">Dertig dagen gratis, zonder betaalgegevens.</p>
+  </div>
+</main>
+<script>
+  // Staat de App Store-link erin, dan wordt de grijze knop een echte.
+  if (IOS_URL) {
+    var k = document.getElementById('ios-knop');
+    var a = document.createElement('a'); a.className='btn btn-primary'; a.href=IOS_URL; a.textContent='iPhone · App Store';
+    k.replaceWith(a); document.getElementById('ios-tekst').remove();
+  }
+</script>
+</body>
+</html>

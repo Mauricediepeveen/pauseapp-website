@@ -227,6 +227,18 @@
         <a href="#hoe" class="btn btn-light">Bekijk hoe het werkt</a>
       </div>
       <p class="hero-note">30 dagen gratis Verbonden proberen · geen betaalgegevens nodig om te starten.</p>
+      <!-- QR naar /download/. Alleen op een groot scherm: op een telefoon
+           scan je je eigen scherm niet, daar staat de knop ernaast. -->
+      <a class="hero-qr" href="download/" aria-label="Download de app">
+        <img src="download/qr-pauzeapp.png" width="96" height="96" alt="QR-code om Pauzeapp te downloaden">
+        <span>Scan om de app<br>te downloaden</span>
+      </a>
+      <style>
+        .hero-qr{display:none;align-items:center;gap:14px;margin-top:22px;text-decoration:none;color:inherit}
+        .hero-qr img{border-radius:12px;border:1px solid rgba(76,13,48,.14)}
+        .hero-qr span{font-size:13px;line-height:1.35;opacity:.75}
+        @media (min-width:900px){.hero-qr{display:inline-flex}}
+      </style>
     </div>
     <div class="pausecard">
       <div class="pauseglyph"></div>
@@ -440,6 +452,7 @@
           <a href="#prijzen">Prijzen</a>
           <a href="verhaal/">Het verhaal</a>
           <a href="registreer/">Start gratis</a>
+          <a href="download/">Download de app</a>
           <a href="login/">Inloggen</a>
         </div>
         <div class="foot-col">
