@@ -65,8 +65,8 @@
   .hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
   .hero-note{margin-top:20px;font-size:15px;color:rgba(240,240,240,.62)}
   .hero-phone{display:flex;justify-content:center;align-items:center}
-  .hero-phone img{width:min(100%,330px);height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.45));transform:rotate(-2deg)}
-  @media (max-width:900px){.hero-phone img{width:min(72%,260px);transform:none}}
+  .hero-phone video{display:block;width:min(100%,300px);height:auto;border-radius:34px;background:#FFF1DE;box-shadow:0 30px 60px rgba(0,0,0,.45);transform:rotate(-2deg)}
+  @media (max-width:900px){.hero-phone video{width:min(64%,240px);border-radius:26px;transform:none}}
 
   /* SECTION SHELL */
   section{padding:88px 0}
@@ -268,8 +268,12 @@
          scherm met de drie herschreven versies. Dat is het product. Wie dit
          ziet, snapt in één blik wat drie alinea's tekst niet lukt. -->
     <div class="hero-phone">
-      <img src="hero-telefoon.png" width="656" height="1360"
-           alt="Pauzeapp: drie rustigere versies van je bericht, jij kiest welke er weggaat">
+      <video src="pauzeapp-demo.mp4" poster="demo-poster.jpg" width="588" height="1280"
+             autoplay muted loop playsinline preload="metadata"
+             aria-label="Pauzeapp: je typt een boos bericht, drukt op pauze en kiest een rustigere versie">
+        <img src="hero-telefoon.png" width="656" height="1360"
+             alt="Pauzeapp: drie rustigere versies van je bericht, jij kiest welke er weggaat">
+      </video>
     </div>
   </div>
 </section>
