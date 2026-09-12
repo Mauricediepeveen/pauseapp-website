@@ -252,10 +252,11 @@
            de juiste winkel gaat. -->
       <a class="btn btn-primary hero-download" href="download/" id="hero-download">Download de app</a>
       <script>
-        // Op Android rechtstreeks naar de Play Store, zonder tussenpagina.
-        // Op iPhone blijft /download/ staan tot de App Store-link er is.
+        // Op een telefoon rechtstreeks naar de juiste winkel, zonder tussenpagina.
         if (/android/i.test(navigator.userAgent))
           document.getElementById('hero-download').href = 'https://play.google.com/store/apps/details?id=com.mauricediepeveen.pauzeapp';
+        else if (/iphone|ipad|ipod/i.test(navigator.userAgent))
+          document.getElementById('hero-download').href = 'https://apps.apple.com/app/id6804631695';
       </script>
       <style>
         .hero-download{display:inline-block;margin-top:16px}
@@ -446,6 +447,7 @@
     <div class="faq-item"><h3>Moet mijn co-ouder ook meedoen?</h3><p>Voor het delen van agenda, foto's en berichten wel. Maar functies zoals berichten verzachten en door de ogen van je kind kijken kun je ook alleen gebruiken (Solo).</p></div>
     <div class="faq-item"><h3>Is mijn informatie veilig?</h3><p>Je gegevens staan op servers binnen de EU (Frankfurt) en zijn verder alleen zichtbaar voor je gekoppelde co-ouder. Je notities en logboek blijven priv&eacute; op je eigen telefoon. E&eacute;n ding is goed om te weten: als je een bericht laat verzachten, wordt die tekst verwerkt door onze AI-leverancier in de Verenigde Staten, met de EU-Standaardcontractbepalingen als waarborg. Je tekst wordt daar niet permanent opgeslagen en niet gebruikt om modellen te trainen. Hoe dat precies zit staat in onze <a href="/privacy">privacyverklaring</a>.</p></div>
     <div class="faq-item"><h3>Krijg ik mijn geld terug als ik me bedenk?</h3><p>Ja. Je hebt veertien dagen bedenktijd vanaf het moment dat je betaalt. Zeg je binnen die termijn op en mail je ons, dan storten wij <strong>het hele bedrag</strong> terug &mdash; wij rekenen niets af voor de dagen die je de app al gebruikte. Het staat binnen veertien dagen op je rekening.</p></div>
+    <div class="faq-item"><h3>Waarom is de prijs in de iPhone-app anders?</h3><p>Koop je Verbonden in de iPhone-app, dan loopt de betaling via Apple en betaal je &euro;9,99 per maand of &euro;99,99 per jaar; Apple rekent daar een percentage over. Koop je hier op de site (&euro;8,99 per maand of &euro;89,90 per jaar), dan werkt je abonnement daarna gewoon in de app, ook op iPhone. Op Android en op de site gelden altijd de prijzen hierboven.</p></div>
     <div class="faq-item"><h3>Kan ik opzeggen?</h3><p>Ja, op elk moment via je account. Bij een maandabonnement stopt de eerstvolgende incasso en houd je toegang tot het einde van je betaalde maand. Een jaarabonnement loopt na twaalf maanden <strong>niet</strong> stilzwijgend nog een jaar door, maar gaat over in een maandabonnement dat je elke maand kunt opzeggen.</p></div>
     <div class="faq-item"><h3>Werkt Pauzeapp samen met mediators?</h3><p>Nee, en dat is bewust. Met de Mediator &amp; PDF-functie stuur je zélf een nette PDF naar de mediator van jóuw keuze, met je co-ouder altijd in de CC. Jij houdt de regie; Pauzeapp faciliteert alleen technisch.</p></div>
   </div>

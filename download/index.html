@@ -16,7 +16,7 @@
   // Store staat: onderstaande regel invullen, en elke geprinte code werkt
   // vanzelf ook voor iPhone. Niets opnieuw drukken.
   var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.mauricediepeveen.pauzeapp";
-  var IOS_URL     = "";   // straks: "https://apps.apple.com/app/id6804631695"
+  var IOS_URL     = "https://apps.apple.com/app/id6804631695";
   var ua = navigator.userAgent || "";
   if (/android/i.test(ua)) { location.replace(ANDROID_URL); }
   else if (/iphone|ipad|ipod/i.test(ua) && IOS_URL) { location.replace(IOS_URL); }
