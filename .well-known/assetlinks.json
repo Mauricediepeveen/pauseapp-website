@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.mauricediepeveen.pauzeapp",
+      "sha256_cert_fingerprints": [
+        "A3:DF:B5:94:21:CE:FA:87:F0:77:5B:D2:17:90:4D:55:FC:99:30:36:93:7A:85:DA:79:F6:98:DE:13:8E:40:9C"
+      ]
+    }
+  }
+]

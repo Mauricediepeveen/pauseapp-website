@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Koppelen met je co-ouder · Pauzeapp</title>
+<link rel="icon" type="image/png" href="/logo-icon.png">
+<link rel="apple-touch-icon" href="/logo-icon.png">
+<meta name="description" content="Koppel met je co-ouder in Pauzeapp." />
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--zand:#FFF1DE;--aub:#4C0D30;--terra:#DD6822;--diep:#8F380A;--kaart:#EAC491;--gm:rgba(76,13,48,.72)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--zand);color:var(--aub);font:17px/1.55 Figtree,system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+  header{padding:22px 24px}
+  header a{color:var(--aub);text-decoration:none;font:600 20px Fraunces,serif}
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
+  .kaart{background:#fff;border:1px solid rgba(76,13,48,.14);border-radius:28px;padding:36px 32px;max-width:560px;width:100%;text-align:center;overflow-wrap:anywhere}
+  @media (max-width:420px){.kaart{padding:28px 20px} h1{font-size:26px}}
+  .eyebrow{font-size:12px;letter-spacing:3px;color:var(--terra);font-weight:700;margin:0 0 10px}
+  h1{font:700 32px/1.15 Fraunces,serif;margin:0 0 10px}
+  p{margin:0 0 20px;color:var(--gm)}
+  .stap{display:flex;gap:14px;text-align:left;margin:0 0 16px;align-items:flex-start}
+  .bol{flex:none;width:28px;height:28px;border-radius:14px;background:var(--terra);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .stap b{display:block;color:var(--aub)}
+  .stap span{color:var(--gm);font-size:15px}
+  .knoppen{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:24px 0 0}
+  .btn{display:inline-block;padding:14px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:16px;background:var(--terra);color:#fff}
+  .code{background:var(--kaart);border-radius:18px;padding:18px;margin:24px 0 0}
+  .code .lab{font-size:11px;letter-spacing:2px;color:var(--diep);font-weight:700}
+  .code .nr{font:700 30px/1.2 Figtree,sans-serif;letter-spacing:5px;margin-top:4px}
+  .klein{font-size:13px;margin:18px 0 0}
+</style>
+</head>
+<body>
+<header><a href="/">Pauzeapp</a></header>
+<main>
+  <div class="kaart">
+    <p class="eyebrow">KOPPELEN</p>
+    <h1>Nog twee stappen</h1>
+    <p>Je co-ouder gebruikt Pauzeapp en wil samen met jou de afspraken over de kinderen op één plek houden.</p>
+
+    <div class="stap">
+      <div class="bol">1</div>
+      <div><b>Download Pauzeapp</b><span>Met de knop hieronder. Je hebt alleen een mailadres nodig.</span></div>
+    </div>
+    <div class="stap">
+      <div class="bol">2</div>
+      <div><b>Tik daarna nog één keer op de link</b><span>De link in het bericht dat je kreeg. De app opent dan vanzelf en jullie zijn gekoppeld.</span></div>
+    </div>
+
+    <div class="knoppen">
+      <a class="btn" id="winkel" href="/download">Download de app</a>
+    </div>
+
+    <div class="code" id="codevak" hidden>
+      <div class="lab">LUKT HET TIKKEN NIET? VUL DEZE CODE IN</div>
+      <div class="nr" id="codenr"></div>
+    </div>
+
+    <p class="klein">Heb je de app al? Dan had deze pagina niet moeten verschijnen — tik nog eens op de link, of vul de code hierboven in bij Meer, onder "Ik heb een code gekregen".</p>
+  </div>
+</main>
+<script>
+  // Deze pagina zie je alleen als de app NIET op je telefoon staat. Staat hij
+  // er wel, dan vangt de app de link zelf af en kom je hier nooit.
+  //
+  // De code staat er ook als los nummer bij. Niet omdat we hem nodig hebben,
+  // maar omdat er altijd iemand is bij wie het tikken niet werkt -- een oude
+  // telefoon, een mailprogramma dat de link kapotmaakt. Dan is dit de uitweg
+  // in plaats van een doodlopende pagina.
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var code = (p.get('c') || '').trim();
+    if (code) {
+      document.getElementById('codenr').textContent = code;
+      document.getElementById('codevak').hidden = false;
+    }
+    var ua = navigator.userAgent || '';
+    var knop = document.getElementById('winkel');
+    if (/android/i.test(ua)) {
+      knop.href = 'https://play.google.com/store/apps/details?id=com.mauricediepeveen.pauzeapp';
+      knop.textContent = 'Download in de Play Store';
+    } else if (/iphone|ipad|ipod/i.test(ua)) {
+      knop.href = 'https://apps.apple.com/app/id6804631695';
+      knop.textContent = 'Download in de App Store';
+    }
+  })();
+</script>
+</body>
+</html>

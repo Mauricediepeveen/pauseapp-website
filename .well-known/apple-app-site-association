@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["Q5DA2XJ4S4.com.mauricediepeveen.pauzeapp"],
+        "components": [
+          { "/": "/koppel", "comment": "Koppelen met je co-ouder" },
+          { "/": "/koppel*", "comment": "Koppelen met je co-ouder, met code" }
+        ]
+      }
+    ]
+  }
+}
